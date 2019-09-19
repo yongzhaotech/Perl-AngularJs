@@ -1,0 +1,14 @@
+<div class="ad_action_box_wrapper">
+[% unless site_config.user_signed_in() %]
+	[% include login_box %]
+	[% include forget_password_box %]
+	[% include register %]
+[% end %]
+[% if is_ad_detail %]
+	[% include advertise_contact %]
+	[% include email_freind_box %]
+[% end %]
+[% include contact_us %]
+[% include find_visitor_ad_box %]
+[% include search_box %]
+</div>

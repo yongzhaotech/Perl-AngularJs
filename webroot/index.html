@@ -1,0 +1,93 @@
+<!doctype html>
+<html ng-app="esales">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="google-site-verification" content="nYcCLtraHrjy7q-36JEwXtLaH2EdoZ07q9adK1WAZZc" />
+		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">
+		<title>esaleshome.com</title>
+		<link rel="stylesheet" type="text/css" href="/ads/library/style/main.css">
+		<link rel="stylesheet" type="text/css" href="/ads/crescendo/css/games.css">
+		<script src="/ads/library/jscript/jquery-3.2.1.min.js"></script>
+		<script src="/ads/library/jscript/angular.min.js"></script>
+		<script src="/ads/library/jscript/angular-route.min.js"></script>
+		<script src="/ads/library/jscript/angular-sanitize.min.js"></script>
+		<script src="/ads/library/jscript/angular-cookies.min.js"></script>
+		<script src="/ads/library/jscript/langs.js"></script>
+		<script src="/ads/library/jscript/static_vars.js"></script>
+		<script src="/ads/library/jscript/vars.js"></script>
+		<script src="/ads/library/jscript/engine.js"></script>
+		<script src="/ads/library/jscript/dhtml.js"></script>
+		<script src="/ads/library/jscript/init.js"></script>
+		<script src="/ads/library/jscript/ng-esales.js"></script>
+		<script src="/ads/library/jscript/ng-box.js"></script>
+		<script src="/ads/library/jscript/ng-msg.js"></script>
+		<script src="/ads/library/jscript/ng-user.js"></script>
+		<script src="/ads/library/jscript/ng-ad.js"></script>
+		<script src="/ads/library/jscript/ng-post.js"></script>
+		<script src="/ads/library/jscript/ng-other.js"></script>
+		<script src="/ads/library/jscript/pinnacle-sports.js"></script>
+	</head>
+<body onload="site_initialize();">
+<div class="clk_mobile ang_pre_hide">
+	<div id="fb-root"></div><script>(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));</script>
+	<div id="t_c_spacer"></div>
+	<main id="ad_content_area">
+		<div ng-if="screen_scrollable()" class="icon_list"><div class="nav_icon" onclick="eEngine.to('b_c_spacer')">&#8681;</div></div>
+		<div ng-view></div>
+		<div ng-if="screen_scrollable()" class="icon_list"><div class="nav_icon" onclick="eEngine.to('t_c_spacer')">&#8679;</div></div>
+	</main>
+	<iframe id="ajax_imitator" name="ajax_imitator" style="width:0;height:0;display:none;"></iframe>
+	<div id='form_copy_wrapper'></div>
+	<div id="b_c_spacer"></div>
+	<footer>
+		<div class="footer">
+			<span class="copy_right">&copy; 2017 esaleshome.com</span>
+		</div>
+		<div class="facebook">
+			<div class="inline_block">
+				<div class="fb-like" data-href="http://esaleshome.com" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
+			</div>
+		</div>
+		<div ng-controller="messageController">
+			<section ng-class="{site_msg, site_msg_active:site_msg_flag()}">
+				<div id="ang_message_wrapper">
+					<div screen-message type="error"></div>
+					<div screen-message type="success"></div>
+					<div screen-message type="image"></div>
+					<div screen-message type="menu"></div>
+				</div>
+			</section>
+		</div>
+	</footer>
+	<nav id="ad_title_bar" ng-controller="actionBoxController">
+		<nav class="btn_list">
+			<div id="menu_launcher">
+				<div class="menu_clker" ng-class="[{menu_clker_active:engine.menu_clker_active}]" ng-click="engine.models['msg'].load_menu()">
+					{{engine.gb_labels('c_menu')}}
+				</div>
+			</div>
+			<div class="nav_btn" ng-click="home_page()">
+				{{engine.gb_labels('c_home')}}
+			</div>
+			<div class="nav_btn" ng-click="engine.set_language();">
+				{{engine.gb_labels('c_language')}}
+			</div>
+			<div class="use_mobile">{{engine.gb_labels('c_use_mobile')}}</div>
+			<div class="ad_action_box_wrapper">
+				<ad-box type="advertise-contact"></ad-box>	
+				<ad-box type="contact-us"></ad-box>	
+				<ad-box type="email-freind-box"></ad-box>	
+				<ad-box type="find-visitor-ad-box"></ad-box>	
+				<ad-box type="forget-password-box"></ad-box>	
+				<ad-box type="login-box"></ad-box>	
+				<ad-box type="register"></ad-box>	
+				<ad-box type="search-box"></ad-box>
+				<section class="loading" ng-if="engine.is_loading_data()">
+					<div class="load_message">{{engine.gb_labels('loading_data')}}</div>
+				</section>
+			</div>
+		</nav>
+	</nav>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+[% if site_config.is_user_page() %]
+	<nav class="account_tabs" ng-if="!is_opague()">
+	[% if site_config.user_signed_in() %]
+		<span class="wide_button" onclick="document.forms['sign_out_form'].submit();">{{gb_labels.c_sign_out[gb_lang]}}</span>
+		<span class="wide_button" onclick="page_location('/user_account');">{{gb_labels.c_profile[gb_lang]}}</span>
+		<span class="wide_button" onclick="page_location('/user_advertise');">{{gb_labels.c_my_post[gb_lang]}}</span>
+		[% if site_config.user().get('access_level') > 1 %]
+			<span class="wide_button" onclick="page_location('/save_category');">{{gb_labels.c_category[gb_lang]}}</span>
+			<span class="wide_button" onclick="page_location('/save_subcategory');">{{gb_labels.c_sub_category[gb_lang]}}</span>
+			<span class="wide_button" onclick="page_location('/page_permission');">{{gb_labels.c_permission[gb_lang]}}</span>
+			<span class="wide_button" onclick="page_location('/admin_advertise');">{{gb_labels.c_advertise[gb_lang]}}</span>
+			<span class="wide_button" onclick="page_location('/visitor_hits');">{{gb_labels.c_hit[gb_lang]}}</span>
+			<span class="wide_button" onclick="page_location('/admin_user');">{{gb_labels.c_user[gb_lang]}}</span>
+			<span class="wide_button" onclick="document.forms['gen_static_content'].submit();">{{gb_labels.c_static_content[gb_lang]}}</span>
+			<span class="wide_button" onclick="document.forms['gen_static_htmls'].submit();">{{gb_labels.c_static_html[gb_lang]}}</span>
+			<span class="wide_button" onclick="document.forms['start_server_form'].submit();">{{gb_labels.c_start_server[gb_lang]}}</span>
+			<form style="margin:0" target="ajax_imitator" name="gen_static_content" action="[% site_config.config('perl_root') %]/generate_static_content.pl"></form>
+			<form style="margin:0" target="ajax_imitator" name="gen_static_htmls" action="[% site_config.config('perl_root') %]/generate_htmls.pl"></form>
+			<form style="margin:0" target="ajax_imitator" name="start_server_form" action="[% site_config.config('perl_root') %]/server_request.pl"><input type="hidden" name="f_action" value="restart_apache" /></form>
+		[% end %]
+		<form style="margin:0;" name="sign_out_form" target="ajax_imitator" action="[% site_config.config('perl_root') %]/sign_out.pl"></form>
+	[% else %]
+		<div ng-controller="accountBoxController">
+			<span class="wide_button" ng-click="boxes.attach('login')">{{gb_labels.c_sign_in[gb_lang]}}</span>
+			<span class="wide_button" ng-click="boxes.attach('forget_password')">{{gb_labels.c_fgt_passwd[gb_lang]}}</span>
+			<span class="wide_button" ng-click="boxes.attach('register')">{{gb_labels.c_gen_account[gb_lang]}}</span>
+		</div>
+	[% end %]
+	</nav>
+[% end %]

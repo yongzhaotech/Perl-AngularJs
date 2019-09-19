@@ -1,0 +1,13 @@
+<div class="page_error">
+[% if status == 1 %]
+	account is activated successfully!
+[% elsif status == 2 %]
+	account is already activated
+[% elsif status == 3 %]
+	invalid information is provided
+[% elsif status == 4 %]
+	error occurs while processing the activation, try again later
+[% else %]
+	required information is missing
+[% end %]
+</div>

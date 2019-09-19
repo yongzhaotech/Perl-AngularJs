@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>[% name %]</title>
+</head>
+<body>
+<div>Hello [% title %],</div>
+<div style="height:25px;"></div>
+<div>A buyer shows interests in the following item you posted on this site</div>
+<div style="height:25px;"></div>
+<div>Item name: <a href="http://[% domain %]/ads/index.html#!/ad_detail/[% id %]" style="font-weight:bold;color:#0509a1;">[% name %]</a></div>
+<div>Posted: [% time %]</div>
+<div>Price: [% price %]</div>
+<div style="height:25px;"></div>
+<div>The buyer says:</div>
+<div>-------------------------</div>
+<div>[% message %]</div>
+<div>-------------------------</div>
+<div style="height:25px;"></div>
+<div>Use "Reply" to communicate with this person</div>
+<div style="height:25px;"></div>
+<div>Thanks</div>
+<div>[% domain %]</div>
+<div>[% today %]</div>
+</body>
+</html>

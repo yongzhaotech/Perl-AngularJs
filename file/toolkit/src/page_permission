@@ -1,0 +1,69 @@
+[% if site_config.error() %]
+<div class="site_config_error">
+    [% site_config.error %]
+</div>
+[% else %]
+<script type="text/javascript" language="JavaScript">
+	function apply_permission_setting(s_p, a_p, c) {
+		var s_p_f = document.forms[s_p];
+		var a_p_f = document.forms[a_p];
+		a_p_f['page'].value = s_p_f['page_' + c].value;
+		a_p_f['access_level'].value = s_p_f['access_level_' + c].value;
+		a_p_f['check_ad'].value = s_p_f['check_ad_' + c].value;
+		a_p_f.submit();
+	}
+	function access_level(s_p, c, v) {
+		document.forms[s_p]['access_level_' + c].value = v;
+	}
+	function check_ad(s_p, c, v) {
+		document.forms[s_p]['check_ad_' + c].value = v;
+	}
+</script>
+<form style="margin:0" name="set_permission">
+	<table style="width:100%" border="0" cellpadding="0" cellspacing="2">
+		<tr style="font-weight:bold;">
+			<td>Page Name</td>
+			<td>Access Level</td>
+			<td>Check Ad</td>
+			<td>Permission Set</td>
+			<td>Apply Change</td>
+		</tr>
+		[% count = 0 %]
+		[% foreach file in files %]
+			[% color = '#eeeeee' %]
+			[% if count mod 2 == 0 %]
+				[% color = '#eeeecc' %]
+			[% end %]
+			[% count = count + 1 %]
+		<tr style="background-color:[% color %];">
+			<td>
+				<input type="text" name="page_[% count %]" value="[% file.page %]" style="width:250px;" readonly />
+			</td>
+			<td>
+				<input type="text" name="access_level_[% count %]" value="[% file.access_level %]" style="width:20px;" readonly />
+			</td>
+			<td>
+				<input type="text" name="check_ad_[% count %]" value="[% file.check_ad %]" style="width:20px;" readonly />
+			</td>
+			<td>
+				<span class="wide_button" onclick="access_level('set_permission', '[% count %]', '0');">everyone</span>
+				<span class="wide_button" onclick="access_level('set_permission', '[% count %]', '1');">user</span>
+				<span class="wide_button" onclick="access_level('set_permission', '[% count %]', '2');">admin</span>
+				<span>check ad:</span>
+				<span class="wide_button" onclick="check_ad('set_permission', '[% count %]', '1');">yes</span>
+				<span class="wide_button" onclick="check_ad('set_permission', '[% count %]', '0');">no</span>
+			</td>
+			<td>
+				<input type="button" onclick="apply_permission_setting('set_permission', 'apply_permission', '[% count %]');" value="apply change" />
+			</td>
+		</tr>
+		[% end %]
+	</table>
+</form>
+<form style="margin:0" target="ajax_imitator" name="apply_permission" action="[% site_config.config('perl_root') %]/admin_function.pl">
+	<input type="hidden" name="page" />
+	<input type="hidden" name="access_level" />
+	<input type="hidden" name="check_ad" />
+	<input type="hidden" name="admin_action" value="set_permission" />
+</form>
+[% end %]

@@ -1,0 +1,5 @@
+<html>
+	<head><title></title></head>
+	<body onload="[% execute_js_functions %]">
+    </body>
+</html>

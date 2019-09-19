@@ -1,0 +1,197 @@
+[% unless site_config.error() %]
+<div id="ad_form_wrapper" ng-controller="esalesController">
+	<form name="work_on_advertise" action="[% site_config.config('perl_root') %]/edit_ad.pl" ng-init="register_form('work_on_advertise')"> 
+		<div class="ad_inline_block"><div class="ad_box_title">{{gb_labels.p_edit_title[gb_lang]}}</div></div><div class="ad_inline_block_top"></div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_cat_title[gb_lang]}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.category">{{gb_labels[screen_error.category][gb_lang]}}</div>
+				<div ad-category type="main"></div>
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{gb_labels.p_cat_hint[gb_lang]}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_sub_cat_title[gb_lang]}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.item">{{gb_labels[screen_error.item][gb_lang]}}</div>
+				<div ad-category type="sub"></div>
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{gb_labels.p_sub_cat_hint[gb_lang]}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_p_name_title[gb_lang]}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.ad_name">{{gb_labels[screen_error.ad_name][gb_lang]}}</div>
+				<input type="text" name="ad_name" ng-model="name" maxlength="100" />
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{gb_labels.p_ad_name_hint[gb_lang]}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_free_title[gb_lang]}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.is_free">{{gb_labels[screen_error.is_free][gb_lang]}}</div>
+				<nav class="btn_list">
+					<div ng-class="['tab',{active:is_free == '1'}]" ng-click="ad_is_free()">{{gb_labels.p_yes_title[gb_lang]}}</div>
+					<div ng-class="['tab',{active:is_free == '0'}]" ng-click="ad_not_free()">{{gb_labels.p_no_title[gb_lang]}}</div>
+				</nav>
+				<input type="hidden" name="is_free" value="{{is_free}}" />
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+				</div>
+			</div>
+		</div>
+		<div id="price_row" ng-show="is_free == '0'">
+			<div class="ad_inline_block">
+				<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_currency_title[gb_lang]}}</div></div>
+				<div class="ad_box_field">
+					<div class="error" ng-if="screen_error.currency">{{gb_labels[screen_error.currency][gb_lang]}}</div>
+					<nav class="btn_list">
+						<div ng-class="['tab',{active:currency == 'c'}]" ng-click="set_currency('c')">{{gb_labels.p_can_dollar[gb_lang]}}</div>
+						<div ng-class="['tab',{active:currency == 'u'}]" ng-click="set_currency('u')">{{gb_labels.p_us_dollar[gb_lang]}}</div>
+						<div ng-class="['tab',{active:currency == 'r'}]" ng-click="set_currency('r')">{{gb_labels.p_rmb_yuan[gb_lang]}}</div>
+					</nav>
+					<input type="hidden" name="currency" value="{{currency}}" ng-disabled="is_free != '0'" />
+				</div>
+			</div><div class="ad_inline_block_top">
+				<div class="ad_box_field">
+					<div class="currency_hints">
+					</div>
+				</div>
+			</div>
+			<div class="ad_inline_block">
+				<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_price_title[gb_lang]}}</div></div>
+				<div class="ad_box_field">
+					<div class="error" ng-if="screen_error.price">{{gb_labels[screen_error.price][gb_lang]}}</div>
+					<input type="text" name="price" maxlength="15" ng-disabled="is_free != '0'" ng-model="price" />
+				</div>
+			</div><div class="ad_inline_block_top">
+				<div class="ad_box_field">
+					<div class="post_hints">
+						{{gb_labels.p_price_hint[gb_lang]}}	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_detail_title[gb_lang]}}</div></div>
+			<div class="ad_box_field">
+				<textarea name="description" rows="4" cols="100" ng-model="description"></textarea>
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{gb_labels.p_detail_hint[gb_lang]}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field">
+				<ng-switch on="ad_image_full()">
+					<nav class="btn_list">
+						<div ng-switch-when="true" ng-class="['tab','inactive']">{{gb_labels.r_add_photos[gb_lang]}}</div>
+						<div ng-switch-default ng-class="'tab'" ng-click="add_ad_image()">{{gb_labels.r_add_photos[gb_lang]}}</div>
+					</nav>
+				</ng-switch>
+			</div>
+			<image-list></image-list>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					[% site_config.config('maximum_image_number') %] {{gb_labels.p_add_photo_hint[gb_lang]}} 
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_contact_title[gb_lang]}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.contact_method">{{gb_labels[screen_error.contact_method][gb_lang]}}</div>
+				<nav class="btn_list">
+					<div ng-class="['tab',{active:is_contact_method('contact_phone')}]" ng-click="set_contact_method('contact_phone')">{{gb_labels.p_phone[gb_lang]}}</div>
+					<div ng-class="['tab',{active:is_contact_method('contact_email')}]" ng-click="set_contact_method('contact_email')">{{gb_labels.p_email[gb_lang]}}</div>
+				</nav>
+				<input type="hidden" name="contact_method" value="{{contact_method()}}" />
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{gb_labels.p_contact_you_title[gb_lang]}}
+				</div>
+			</div>
+		</div>
+		<div id="contact_phone_row" ng-show="is_contact_method('contact_phone')">
+			<div class="ad_inline_block">
+				<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_phone_title[gb_lang]}}</div></div>
+				<div class="ad_box_field">
+					<div class="error" ng-if="screen_error.contact_phone">{{gb_labels[screen_error.contact_phone][gb_lang]}}</div>
+					<input type="text" ng-disabled="!is_contact_method('contact_phone')" name="contact_phone" ng-model="contact_methods.contact_phone" maxlength="20" placeholder="9051234567" />
+				</div>
+			</div><div class="ad_inline_block_top">
+				<div class="ad_box_field">
+					<div class="post_hints">
+						{{gb_labels.p_select_phone_hint[gb_lang]}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_province_title[gb_lang]}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.province">{{gb_labels[screen_error.province][gb_lang]}}</div>
+				<div ad-location type="province"></div>
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{gb_labels.p_province_hint[gb_lang]}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_city_title[gb_lang]}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.city">{{gb_labels[screen_error.city][gb_lang]}}</div>
+				<div ad-location type="city"></div>
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{gb_labels.p_city_hint[gb_lang]}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{gb_labels.p_add_title[gb_lang]}}</div></div>
+			<div class="ad_box_field">
+				<input type="text" name="address" ng-model="address" maxlength="100" placeholder="{{gb_labels.p_add_placeholder[gb_lang]}}" />
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{gb_labels.p_add_hint[gb_lang]}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_box_field"><div class="ad_box_label"></div>
+			<span ng-class="['btn',{warn_btn:has_screen_error()}]" ng-click="submit()">{{gb_labels.p_upt_post[gb_lang]}}</span>
+		</div>
+		<input type="hidden" name="advertise_id" value="[% advertise.id %]" />
+	</form>
+</div>
+[% end %]

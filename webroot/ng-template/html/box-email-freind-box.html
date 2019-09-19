@@ -1,0 +1,20 @@
+<div id="email_friend_box" class="ad_action_box" ng-show="boxes.box_attached('email_friend')">
+	<form name="email_friend_form">
+		<div>
+			<div class="account_box_title">{{engine.gb_labels('c_email_friend_link')}}</div>
+			<div class="account_box_label" ng-if="!boxes.errors().email">{{engine.gb_labels('c_return_eml')}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().email">{{engine.gb_labels(boxes.errors().email)}}</div>
+			<div class="account_box_field"><input type="text" name="email" /></div>
+		</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().friend_email">{{engine.gb_labels('c_friend_eml')}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().friend_email">{{engine.gb_labels(boxes.errors().friend_email)}}</div>
+			<div class="account_box_field"><input type="text" name="friend_email" /></div>
+		</div>
+		<div class="account_box_label">
+			<span ng-class="['btn',{warn_btn:boxes.has_screen_error()}]" ng-click="boxes.submit(boxes.get_scope())">{{engine.gb_labels('c_submit')}}</span>
+			<span ng-class="['btn']" ng-click="boxes.detach('email_friend')">{{engine.gb_labels('c_cancel')}}</span>
+			<input type="hidden" name="advertise_id" value="{{boxes.mailer_info().id}}" />
+		</div>
+	</form>
+</div>

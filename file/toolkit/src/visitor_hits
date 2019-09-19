@@ -1,0 +1,25 @@
+[% if site_config.error() %]
+<div class="site_config_error">
+    [% site_config.error %]
+</div>
+[% else %]
+<script>var iplistsviewed = {};</script>
+<script type="text/javascript" language="JavaScript" src="[% site_config.config('web_root') %]/library/jscript/admin.js"></script>
+[% if page_list %]<form style="margin:0px 5px" name="page_selection_frm">[% page_list %]</form>[% end %]
+<form name="admin_visitor_hits">
+	<table id="admin_visitor_hits" width="100%" class="alert" "border="1" bordercolor="#eccccc" rules="all" cellspacing="0" cellpadding="2" style="border-right: #eccccc 1px solid; border-top: #eccccc 1px solid; background: none transparent scroll repeat 0% 0%; border-left: #eccccc 1px solid;border-bottom: #eccccc 1px solid; border-collapse: collapse">
+		<tr>
+			<td class="title">ip address</td>
+			<td class="title">last visited</td>
+			<td class="title">times</td>
+		</tr>
+	[% foreach hit in hits %]
+		<tr id="ip_[% hit.ip %]" style="background-color:[% if hit.create_time.match(hit.this_day) %]#ff9900[% else %]#ffffff[% end %];">
+			<td><span class="button" onclick="hit_details('[% hit.ip %]');">[% hit.ip %]</span></td>
+			<td>[% hit.create_time %]</td>
+			<td>[% hit.count %]</td>
+		</tr>
+	[% end %]
+	</table>
+</form>
+[% end %]

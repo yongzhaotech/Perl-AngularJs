@@ -1,0 +1,8 @@
+<html>
+	<head><title></title></head>
+	<body onload="parent.window.add_success_message(document.display.content.value);document.display.removeChild(document.display.content);[% execute_js_functions %]">
+		<form name="display">
+			<textarea name="content" style="display:none;">[% server_response %]</textarea>
+		</form>
+    </body>
+</html>

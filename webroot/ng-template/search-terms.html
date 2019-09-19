@@ -1,0 +1,9 @@
+<div class="ad_nav_bar" ng-if="$ctrl.engine.search_terms.length">
+	<span ng-repeat="term in $ctrl.engine.search_terms">
+		<span ng-if="$index > 0"> &#x02022;</span>
+		<ang-area ng-switch="$ctrl.engine.search_terms.length - 1 - $index">
+			<span ng-switch-when="0">{{term.text[$ctrl.engine.gb_lang()]}}</span>
+			<span ng-switch-default class="button" ng-click="$ctrl.engine.search_term(term)">{{term.text[$ctrl.engine.gb_lang()]}}</span>
+		</ang-area>
+	</span>
+</div>

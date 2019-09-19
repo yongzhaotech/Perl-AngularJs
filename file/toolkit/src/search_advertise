@@ -1,0 +1,5 @@
+[% if advertises %]
+	[% include advertise %]
+[% else %]
+	<div class="page_error">[% com_labels.${language}.no_sch_result %]</div>
+[% end %]

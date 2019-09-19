@@ -1,0 +1,32 @@
+[% if site_config.error() %]
+<div class="site_config_error">
+    [% site_config.error %]
+</div>
+[% else %]
+[% if page_list %]<form style="margin:0px 5px" name="page_selection_frm">[% page_list %]</form>[% end %]
+<div class="devider"></div>
+<table style="width:100%" border="0" cellpadding="0" cellspacing="2">
+	<tr style="font-weight:bold;">
+		<td>email</td>
+		<td>last name</td>
+		<td>first name</td>
+		<td>created</td>
+		<td>edited</td>
+		<td>sign ins</td>
+	</tr>
+	[% count = 0 %]
+	[% foreach user in users %]
+		[% color = '#eeeeee' %]
+		[% if count mod 2 == 0 %][% color = '#eeeecc' %][% end %]
+		[% count = count + 1 %]
+	<tr style="background-color:[% color %];">
+		<td>[% user.email %]</td>
+		<td>[% user.last_name %]</td>
+		<td>[% user.first_name %]</td>
+		<td>[% user.create_time %]</td>
+		<td>[% user.edit_time %]</td>
+		<td>[% user.signin_count %]</td>
+	</tr>
+	[% end %]
+</table>
+[% end %]

@@ -1,0 +1,24 @@
+<div id="login_box" class="ad_action_box" ng-show="boxes.box_attached('login')">
+	<form name="login_form">
+		<div class="account_box_title">{{engine.gb_labels('c_sign_in')}}</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().email">{{engine.gb_labels('c_eml_addr')}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().email">{{engine.gb_labels(boxes.errors().email)}}</div>
+			<div class="account_box_field"><input type="text" name="email" placeholder="account.name@example.com" /></div>
+		</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().password">{{engine.gb_labels('c_passwd')}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().password">{{engine.gb_labels(boxes.errors().password)}}</div>
+			<div class="account_box_field"><input type="password" name="password" placeholder="Abc56789" /></div>
+		</div>
+		<div>
+			<div class="account_box_label">
+				<span ng-class="['btn',{warn_btn:boxes.has_screen_error()}]" ng-click="boxes.submit(boxes.get_scope())">{{engine.gb_labels('c_sign_in')}}</span>
+				<span ng-class="['btn']" ng-click="boxes.detach('login')">{{engine.gb_labels('c_cancel')}}</span>
+			</div>
+		</div>
+		<div>
+			<span class="button" ng-click="boxes.attach('forget_password');">{{engine.gb_labels('c_fgt_passwd')}}</span>
+		</div>
+	</form>
+</div>

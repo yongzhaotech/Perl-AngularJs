@@ -1,0 +1,21 @@
+<user-tabs></user-tabs>
+<section ng-if="$ctrl.engine.user_signed_in()">
+	<div class="account_box_title">{{$ctrl.engine.gb_labels('c_my_posts')}}</div>
+	<div class="user_advertise_box" id="ad_{{advertise.id}}" ng-repeat="advertise in $ctrl.account.ads()">
+		<div><span class="button" ng-click="$ctrl.expand_user_ad(advertise)">{{advertise.name}} (viewed: {{advertise.viewed}})</span></div>
+		<div class="user_ad_detail" ng-if="$ctrl.user_ad_expanded(advertise)">
+			<div class="devider"></div>
+			<div ng-bind-html="advertise.description"></div>
+			<div class="devider"></div>
+			<div>
+				<span ng-if="advertise.is_free * 1">{{$ctrl.engine.gb_labels('c_free_offer')}}</span>
+				<span ng-if="!(advertise.is_free * 1)">{{advertise.price}}</span>
+			</div>
+			<div class="devider"></div>
+			<div>
+				<span class="wide_button" ng-click="$ctrl.edit_ad(advertise)">{{$ctrl.engine.gb_labels('c_edit_ad')}}</span>
+				<span class="wide_button" ng-click="$ctrl.delete_ad(advertise)">{{$ctrl.engine.gb_labels('c_delete')}}</span>
+			</div>
+		</div>
+	</div>
+</section>

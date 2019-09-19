@@ -1,0 +1,39 @@
+<div id="ad_detail_contact_box" class="ad_action_box" ng-show="boxes.box_attached('ad_detail_contact')">
+	[% contact_phone = com_labels.${language}.contact_phone_title_1 %]
+	[% if advertise.contact_method.match('\b(contact_)?email\b') %]
+	<div id="ad_detail_contact">
+		<form style="margin:0;" name="ad_detail_contact_form" action="[% site_config.config('perl_root') %]/server_request.pl">
+			<div style="font-style:oblique;font-weight:bold;color:#1b0af9;">[% advertise.get('name') %]</div>
+			<div class="account_box_title">{{gb_labels.c_contact_poster_title[gb_lang]}}</div>
+			<div>
+				<div class="account_box_label" ng-if="!boxes.errors().email">{{gb_labels.c_return_eml[gb_lang]}}</div>
+				<div class="account_box_label box_error" ng-if="boxes.errors().email">{{gb_labels[boxes.errors().email][gb_lang]}}</div>
+				<div class="account_box_field"><input type="text" name="email" maxlength="100" placeholder="account.name@example.com" /></div>
+			</div>
+			<div>
+				<div class="account_box_label" ng-if="!boxes.errors().message">{{gb_labels.c_msg_post_title[gb_lang]}}</div>
+				<div class="account_box_label box_error" ng-if="boxes.errors().message">{{gb_labels[boxes.errors().message][gb_lang]}}</div>
+				<div class="account_box_field">
+					<textarea name="message" rows="4" cols="100" placeholder="{{gb_labels.c_msg_post_hint[gb_lang]}}" onPaste="return false"></textarea>
+				</div>
+			</div>
+			<div class="account_box_label">
+				<span ng-class="['btn',{warn_btn:boxes.has_screen_error()}]" ng-click="boxes.submit(boxes.get_scope())">{{gb_labels.c_submit[gb_lang]}}</span>
+				<span ng-class="['btn']" ng-click="boxes.detach('ad_detail_contact')">{{gb_labels.c_cancel[gb_lang]}}</span>
+				<input type="hidden" name="advertise_id" value="[% advertise.get('id') %]" />
+				<input type="hidden" name="f_action" value="ask_poster" />
+			</div>
+		</form>
+	</div>
+	[% end %]
+	[% if advertise.contact_method.match('\bcontact_phone\b') %]
+	<div style="padding:2px 15px;">
+		{{gb_labels.c_contact_phone_title_2[gb_lang]}}: <font style="font-weight:bold;"><a href="tel:[% advertise.get('contact_phone') %]">[% advertise.get('contact_phone') %]</a></font>
+	</div>
+	[% end %]
+	[% unless advertise.contact_method.match('\b(contact_)?email\b') %]
+	<div style="text-align:center;">
+		<input type="button" name="cancel_contact_btn" value="{{gb_labels.c_close[gb_lang]}}" onclick="clear_box('advertise_contact');" />
+	</div>
+	[% end %]
+</div>

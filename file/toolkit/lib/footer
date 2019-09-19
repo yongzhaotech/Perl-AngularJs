@@ -1,0 +1,23 @@
+	</tr>
+	<tr>
+		<td class="footer_spacer"/>
+		<td class="footer">
+	</tr>
+</table>
+<div class="seo_foot">Delicious Cantonese, Sichuan, Japanese and Thai Cuisines - China Feast Restaurant / Chinese Kitchen Delights, Toronto</div>
+<div class="cf_copy">chinafeast.ca &copy; 2009</div>
+[% INCLUDE shared_iframes %]
+</td><!-- end of book -->
+<td class="interface">
+<div class="floating_top" id="floating_top_elm">
+[% INCLUDE alert_interface %]
+[% INCLUDE order_interface %]
+</div>
+</td>
+</tr>
+</table>
+<!--% INCLUDE image_loader %-->
+<div id="current_total"></div>
+<div id="order_confirmation"></div>
+</body>
+</html>

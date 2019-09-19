@@ -1,0 +1,69 @@
+[% if ad_not_found %]
+	<div class="page_error">{{gb_labels.c_ad_detail_err_title[gb_lang]}}</div>
+[% else %]
+<section ng-controller="adDetailController" ng-if="!home_ad">
+	<div class="ad_detail_title">
+		{{gb_labels.c_ad_detail_title[gb_lang]}}
+	</div>
+	<div class="ad_detail_wrapper" id="big_picture">
+		<div class="ad_detail_img">
+			<img class="ad_image" id="advertise_main_picture" src="[% site_config.config('web_root') %]/image/ad/big/[% advertise.get('main_picture').id %].jpg" ng-click="large_image([% advertise.get('main_picture').id %])" />
+		</div>
+	</div><div class="ad_detail_wrapper">
+		<div class="ad_detail_tab">
+			<div class="devider"></div>
+			<div><span class="wide_button" ng-click="boxes.attach('ad_detail_contact')">{{gb_labels.c_contact_poster_link[gb_lang]}}</span></div>
+			<div class="devider"></div>
+			<div><span class="wide_button" ng-click="boxes.attach('email_friend')">{{gb_labels.c_email_friend_link[gb_lang]}}</span></div>
+		</div>
+	</div><div class="ad_detail_wrapper">
+		<div class="ad_detail_fun">
+			<div class="devider"></div>
+			<div class="ad_title">
+				[% advertise.get('name') %]
+			</div>
+			<div class="devider"></div>
+			<div class="ad_detail">
+				[% if advertise.get('is_free') %]
+				{{gb_labels.c_free_offer[gb_lang]}}
+				[% else %]
+				<div class="ad_title">{{gb_labels.c_ad_scr_price[gb_lang]}}: {{ad_detail.price_display[gb_lang]}}</div>
+				[% end %]
+			</div>
+			<div class="devider"></div>
+			<div class="ad_detail">
+				[% if advertise.get('service') == '1' %]
+				The buyer is required to pick up this sales item from the seller
+				[% elsif advertise.get('service') == '2' %]
+				The seller is willing to deliver this sales item to the buyer
+				[% end %]
+			</div>
+			<div class="devider"></div>
+			<div class="ad_detail">{{gb_labels.c_ad_scr_location[gb_lang]}}:</div>
+			<div class="ad_title">
+				<div>{{ad_detail.province[gb_lang]}}</div>
+				<div>{{ad_detail.city[gb_lang]}}</div>
+				<div>{{ad_detail.location[gb_lang]}}</div>
+			</div>
+			<div class="devider"></div>
+			<div class="ad_title">
+				<div>{{ad_detail.category[gb_lang]}}</div>
+				<div>{{ad_detail.item[gb_lang]}}</div>
+			</div>
+			[% if advertise.contact_method.match('\bcontact_phone\b') %]
+			<div class="devider"></div>
+			<div>
+				{{gb_labels.c_call_poster[gb_lang]}}: [% contact_phone %]<font style="font-weight:bold;"><a href="tel:[% advertise.get('contact_phone') %]">[% advertise.get('contact_phone') %]</a></font>
+			</div>
+			[% end %]
+		<!-- add additional ad information here -->
+		</div>
+	</div>
+	[% include advertise_picture %]
+	<div class="ad_detail_desc">
+		<div class="ad_name">{{gb_labels.c_ad_scr_detail[gb_lang]}}</div>
+		<div ng-bind-html="ad_detail.ad_description[gb_lang]"></div>
+	</div>
+</section>
+<script>view_id = '[% advertise.get('id') %]';</script>
+[% end %]

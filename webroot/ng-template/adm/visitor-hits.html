@@ -1,0 +1,32 @@
+<user-tabs></user-tabs>
+<section ng-if="$ctrl.account.loading()">
+	{{$ctrl.engine.gb_labels('loading_data')}}
+</section>
+<div class="site_config_error" ng-if="$ctrl.account.errors()">
+    {{$ctrl.account.error_message}}
+</div>
+<section ng-if="!$ctrl.account.loading() && !$ctrl.account.errors() && $ctrl.engine.user_signed_in() && $ctrl.account.user().access_level * 1 > 1">
+	<script>var iplistsviewed = {};var frm = document.admin_visitor_hits;</script>
+	<script type="text/javascript" language="JavaScript" src="/ads/library/jscript/admin.js"></script>
+	<nav class="btn_list" ng-if="$ctrl.pages().length">
+		<div ng-class="['page',{current_page:$ctrl.current_page()==page.i}]" ng-repeat="page in $ctrl.pages()" ng-click="$ctrl.account.fetch_adm_visitor_hits(page)">
+			{{page.n}}
+		</div>
+	</nav>
+	<div class="devider"></div>
+	<form name="admin_visitor_hits">
+		<table id="admin_visitor_hits" width="100%" class="alert" "border="1" bordercolor="#eccccc" rules="all" cellspacing="2" cellpadding="2" style="border-right: #eccccc 1px solid; border-top: #eccccc 1px solid; background: none transparent scroll repeat 0% 0%; border-left: #eccccc 1px solid;border-bottom: #eccccc 1px solid; border-collapse: collapse">
+			<tr>
+				<td class="title">ip address</td>
+				<td class="title">last visited</td>
+				<td class="title">times</td>
+			</tr>
+			<tr id="ip_{{hit.ip}}" ng-repeat="hit in $ctrl.hits()">
+				<td><span class="button" ng-click="$ctrl.hit_details(hit)">{{hit.ip}}</span></td>
+				<td>{{hit.create_time}}</td>
+				<td>{{hit.count}}</td>
+			</tr>
+		</table>
+		<input type="hidden" name="session_id" value="{{$ctrl.engine.cookie('session_id')}}" />
+	</form>
+</section>

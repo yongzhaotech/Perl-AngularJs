@@ -1,0 +1,9 @@
+<div class="dp_wrapper">
+	<div class="dp_list">
+		<div>
+			<div ng-model="cat" ng-repeat="cat in cat_list">
+				<div ng-class="['dp_option', {selected:cat_selected(cat)}]" ng-show="show_cat(cat)" ng-click="select_cat(cat)">{{cat.n[engine.gb_lang()]}}</div>
+			</div>
+		</div>
+	</div>
+</div>

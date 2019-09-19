@@ -1,0 +1,15 @@
+<html>
+	<head>
+		<title>Activate Account</title>
+	</head>
+	<body>
+		<p>Hello <strong>[% first_name %]</strong>,</p>
+		<p></p>
+		<p>You successfully registered at [% now %].</p>
+		<p>Please click the following link or copy and paste it into your browser to have your account activated.</p>
+		<p><a href="http://[% domain %]/activate_account?a=[% acc_code %]&v=[% verify_str %]">https://[% domain %]/activate_account?a=[% acc_code %]&v=[% verify_str %]</a></p>
+		<p></p>
+		<p>Thanks</p>
+		<p><strong>[% domain %]</strong></p>
+	</body>
+</html>

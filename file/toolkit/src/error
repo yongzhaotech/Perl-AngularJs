@@ -1,0 +1,3 @@
+<div class='page_error' style='text-align:center;padding-top:50px;'>
+	[% message %]
+</div>

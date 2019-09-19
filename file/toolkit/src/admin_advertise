@@ -1,0 +1,89 @@
+[% if site_config.error() %]
+<div class="site_config_error">
+    [% site_config.error %]
+</div>
+[% else %]
+<script type="text/javascript" language="JavaScript">
+	var statuses = { 0:'inactive', 1:'active' };
+	var actions = { 0:'deactivate_ad', 1:'activate_ad' };
+	function set_status(s_a, a_a, c, s) {
+		var s_a_f = document.forms[s_a];
+		var a_a_f = document.forms[a_a];
+		a_a_f['id'].value = s_a_f['id_' + c].value;
+		s_a_f['status_' + c].value = statuses[s];
+		a_a_f['admin_action'].value = actions[s]; 
+		a_a_f.submit();
+	}
+	function remove_ad(s_a, a_a, c) {
+		var s_a_f = document.forms[s_a];
+		var a_a_f = document.forms[a_a];
+		a_a_f['id'].value = s_a_f['id_' + c].value;
+		a_a_f['admin_action'].value = 'delete'; 
+		a_a_f.submit();
+	}
+	function remove_ad_row(id) {
+		var ad_obj = eEngine.dom('advertise_' + id);
+		get_parent(ad_obj).removeChild(ad_obj);
+	}
+	function get_parent(obj) {
+		if(obj) {
+			return obj.parentElement ? obj.parentElement : obj.parentNode;
+		}
+	}
+</script>
+[% if page_list %]<form style="margin:0px 5px" name="page_selection_frm">[% page_list %]</form>[% end %]
+<div class="devider"></div>
+<form style="margin:0" name="set_advertise">
+	<table style="width:100%" border="0" cellpadding="0" cellspacing="2">
+		<tr style="font-weight:bold;">
+			<td>Ad Name</td>
+			<td>Poster</td>
+			<td>Emai</td>
+			<td>Phone</td>
+			<td>Post Id</td>
+			<td>Post Date</td>
+			<td>Status</td>
+			<td>Apply Change</td>
+		</tr>
+		[% count = 0 %]
+		[% foreach post in posts %]
+			[% color = '#eeeeee' %]
+			[% if count mod 2 == 0 %][% color = '#eeeecc' %][% end %]
+			[% count = count + 1 %]
+		<tr style="background-color:[% color %];" id="advertise_[% post.id %]">
+			<td>
+				[% post.name %]
+			</td>
+			<td>
+				[% post.poster ? post.poster : 'Unkwon Visitor' %]
+			</td>
+			<td>
+				[% post.contact_email %]
+			</td>
+			<td>
+				[% post.contact_phone %]
+			</td>
+			<td>
+				[% post.post_id %]
+			</td>
+			<td>
+				[% post.create_time %]
+			</td>
+			<td>
+				<input type="text" name="status_[% count %]" value="[% if post.active %]active[% else %]inactive[% end %]" readonly />
+				<input type="hidden" name="id_[% count %]" value="[% post.id %]" />
+			</td>
+			<td>
+				<input type="button" onclick="set_status('set_advertise', 'apply_advertise', '[% count %]', '1');" value="activate" />
+				<input type="button" onclick="set_status('set_advertise', 'apply_advertise', '[% count %]', '0');" value="deactivate" />
+				<input type="button" onclick="remove_ad('set_advertise', 'apply_advertise', '[% count %]');" value="delete" />
+			</td>
+		</tr>
+		[% end %]
+	</table>
+</form>
+<form style="margin:0" target="ajax_imitator" name="apply_advertise" action="[% site_config.config('perl_root') %]/admin_function.pl">
+	<input type="hidden" name="id" />
+	<input type="hidden" name="admin_action" />
+</form>
+[% end %]

@@ -1,0 +1,33 @@
+<user-tabs></user-tabs>
+<section ng-if="$ctrl.account.loading()">
+	{{$ctrl.engine.gb_labels('loading_data')}}
+</section>
+<div class="site_config_error" ng-if="$ctrl.account.errors()">
+    {{$ctrl.account.error_message}}
+</div>
+<section ng-if="!$ctrl.account.loading() && !$ctrl.account.errors() && $ctrl.engine.user_signed_in() && $ctrl.account.user().access_level * 1 > 1">
+	<nav class="btn_list" ng-if="$ctrl.pages().length">
+		<div ng-class="['page',{current_page:$ctrl.current_page()==page.i}]" ng-repeat="page in $ctrl.pages()" ng-click="$ctrl.account.fetch_adm_users(page)">
+			{{page.n}}
+		</div>
+	</nav>
+	<div class="devider"></div>
+	<table style="width:100%" border="0" cellpadding="2" cellspacing="2">
+		<tr style="font-weight:bold;">
+			<td>email</td>
+			<td>last name</td>
+			<td>first name</td>
+			<td>created</td>
+			<td>edited</td>
+			<td>sign ins</td>
+		</tr>
+		<tr ng-class="['even', {odd:$ctrl.account.odd_row($index)}]" ng-repeat="user in $ctrl.users()">
+			<td>{{user.email}}</td>
+			<td>{{user.last_name}}</td>
+			<td>{{user.first_name}}</td>
+			<td>{{user.create_time}}</td>
+			<td>{{user.edit_time}}</td>
+			<td>{{user.signin_count}}</td>
+		</tr>
+	</table>
+</section>

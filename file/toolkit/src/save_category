@@ -1,0 +1,44 @@
+[% if site_config.error() %]
+<div class="site_config_error">
+    [% site_config.error %]
+</div>
+[% else %]
+<form name="add_category" action="[% site_config.config('perl_root') %]/save_category.pl">
+	<div class="account_box_title">Create a New Category</div>
+	<div>
+		<div class="account_box_label">Category</div>
+		<div class="account_box_field"><input type="text" name="new_category" maxlength="60" /></div>
+		<div class="account_box_field"><input type="text" name="new_category_cn" maxlength="60" /></div>
+	</div>
+	<div class="account_box_label">
+		<input type="button" name="smt_category" value="Add" onclick="check_input_fields(this.form);" />
+		<input type="hidden" name="frm_action" value="new_category" />
+	</div>
+</form>
+<div class="devider"></div>
+<form name="edit_category" action="[% site_config.config('perl_root') %]/save_category.pl">
+	<div>
+		<div class="account_box_title">Change the category text</div>
+		<div class="account_box_label">Select a category to change</div>
+		<div class="account_box_field">
+			<select name="category" onchange="load_to_change(this.form, this, 'new_category', 'new_category_cn', 'edit_category_obj');">
+				<option value=""></option>
+			[% foreach category in categories %]
+				<option value="[% category.id %]">[% category.name %]::[% category.name_cn %]</option>
+			[% end %]
+			</select>
+		</div>
+	</div>
+	<div id="edit_category_obj" style="display:none;">
+		<div>
+			<div class="account_box_label">Category</div>
+			<div class="account_box_field"><input type="text" name="new_category" maxlength="60" /></div>
+			<div class="account_box_field"><input type="text" name="new_category_cn" maxlength="60" /></div>
+		</div>
+		<div class="account_box_label">
+			<input type="button" name="edit_category" value="Edit" onclick="check_input_fields(this.form);" />
+			<input type="hidden" name="frm_action" value="edit_category" />
+		</div>
+	</div>
+</form>
+[% end %]

@@ -1,0 +1,6 @@
+<nav class="col_list">
+	<div class="nav_col" ng-click="$ctrl.set_order('price')">&#36;</div>
+	<div class="nav_col" ng-click="$ctrl.set_order('create_date')">&#x1F558;</div>
+    <div class="nav_col" ng-if="$ctrl.has_prev_col()" ng-click="$ctrl.prev_col()">&#43;</div>
+    <div class="nav_col" ng-if="$ctrl.has_next_col()" ng-click="$ctrl.next_col()">&#8722;</div>
+</nav>

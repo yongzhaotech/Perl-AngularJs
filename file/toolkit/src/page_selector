@@ -1,0 +1,7 @@
+<div style="width:180px;padding:2px;">
+	<select name="page_selection" onchange="[% js_function %][% if js_params %]([% js_params %])[% else %]('[% page_url %]')[% end %]">
+		[% foreach page_selection in page_selections %]
+		<option value="[% page_selection.page_index %]" [% page_selection.selected %]>[% page_selection.page_text %]</option>
+		[% end %]
+	</select>
+</div>

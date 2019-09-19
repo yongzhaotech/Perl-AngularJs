@@ -1,0 +1,30 @@
+<div class="col_{{$ctrl.nav_col}}" ng-repeat="ad in $ctrl.ads | orderBy:$ctrl.order_by()">
+	<div class="ad_block" ng-class="{dtl_bk:$ctrl.show_detail(ad)}">
+		<div class="block_icon" ng-click="$ctrl.large_image(ad)"><img ng-src="/ads/image/ad/big/{{ad.picture_id}}.jpg" class="ad_image" /></div>
+		<div class="block_spacer"></div>
+		<div class="block_price"><span class="picture_number">{{ad.price_display[$ctrl.engine.gb_lang()]}}</span></div>
+		<div class="block_price">{{$ctrl.engine.gb_labels('r_ad_listed')}}: {{ad.create_date}}</div>
+		<div class="block_info"><span class="button" ng-click="$ctrl.launch_ad_detail(ad)">{{ad.name}}</span></div>
+		<div class="block_info"><span>{{ad.city[$ctrl.engine.gb_lang()]}}</span>, <span>{{ad.province[$ctrl.engine.gb_lang()]}}</span></div>
+		<div class="block_info">
+			<nav class="btn_list">
+				<div class="ad_icon" ng-if="$ctrl.engine.by_mail(ad)" ng-click="$ctrl.boxes.attach_mailer(ad, 'ask_poster')">&#9993;&#9997;</div>
+				<div class="ad_icon" ng-if="$ctrl.engine.by_phone(ad)"><a href="tel:{{ad.contact_phone}}">&#9742;</a></div>
+				<div class="ad_icon" ng-click="$ctrl.boxes.attach_mailer(ad, 'email_friend')">&#9998;</div>
+				<div class="ad_icon" ng-click="$ctrl.flag_detail(ad)">{{$ctrl.show_detail(ad) ? '&#9745;' : '&#9744;'}}</div>
+			</nav>
+		</div>
+		<div class="block_spacer"></div>
+	<div class="sm_spacer" ng-if="$ctrl.show_detail(ad)"></div>
+	</div>
+	<div class="message_desc" ng-if="$ctrl.show_detail(ad)">
+		<div>
+			<div class="dtl_address">
+				<span ng-if="ad.address">{{ad.address}}, </span><span>{{ad.city[$ctrl.engine.gb_lang()]}}, {{ad.province[$ctrl.engine.gb_lang()]}}</span>
+			</div>
+			<div ng-bind-html="$ctrl.html_desc(ad)"></div>
+			<div class="ang_dtl_close" ng-click="$ctrl.flag_detail(ad)">&times;</div>
+		</div>
+	</div>
+	<div class="block_spacer"></div>
+</div>

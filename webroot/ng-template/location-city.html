@@ -1,0 +1,16 @@
+<div class="dp_wrapper">
+	<div class="dp_list">
+		<div ng-switch="prov.c.length">
+			<div ng-switch-when="0">
+				<div ng-class="['dp_option']">...</div>
+			</div>
+			<div ng-switch-default>
+				<div ng-if="expand_city && city_id" ng-click="select_city(city_obj)"class="option_title">{{city_obj.n[engine.gb_lang()]}}</div>
+				<div ng-model="city" ng-repeat="city in prov.c">
+					<div ng-class="['dp_option', {selected:city_selected(city),option_hint:!expand_city}]" ng-show="show_city(city)" ng-click="select_city(city)">{{city.n[engine.gb_lang()]}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="city" value="{{selected_city()}}" />

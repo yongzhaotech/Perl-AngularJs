@@ -1,0 +1,19 @@
+<div id="find_visitor_ad_box" class="ad_action_box" ng-show="boxes.box_attached('find_visitor_ad')">
+	<form name="find_visitor_ad_form">
+		<div class="account_box_title">{{engine.gb_labels('c_visitor_retrieve_title')}}</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().email_phone">{{engine.gb_labels('c_eml_ph_title')}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().email_phone">{{engine.gb_labels(boxes.errors().email_phone)}}</div>
+			<div class="account_box_field"><input type="text" name="email_phone" maxlength="150" /></div>
+		</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().post_id">{{engine.gb_labels('c_post_id_title')}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().post_id">{{engine.gb_labels(boxes.errors().post_id)}}</div>
+			<div class="account_box_field"><input type="text" name="post_id" maxlength="40" /></div>
+		</div>
+		<div class="account_box_label">
+			<span ng-class="['btn',{warn_btn:boxes.has_screen_error()}]" ng-click="boxes.submit(boxes.get_scope())">{{engine.gb_labels('c_retrieve')}}</span>
+			<span ng-class="['btn']" ng-click="boxes.detach('find_visitor_ad')">{{engine.gb_labels('c_cancel')}}</span>
+		</div>
+	</form>
+</div>

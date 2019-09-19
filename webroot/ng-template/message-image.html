@@ -1,0 +1,8 @@
+<pictures ng-if="img_flag">
+	<div class="ang_toggles">
+		<div class="page" ng-click="clear_images()">&#10005;</div>
+		<div class="page" ng-show="has_prev_image()" ng-click="prev_image()">&#10092;</div>
+		<div class="page" ng-show="has_next_image()" ng-click="next_image()">&#10093;</div>
+	</div>
+	<img class="large_image" ng-repeat="img in images" ng-if="cur_img == img.i" ng-src="/ads/image/ad/large/{{img.i}}.jpg" />
+</pictures>

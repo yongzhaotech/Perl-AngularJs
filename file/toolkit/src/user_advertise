@@ -1,0 +1,20 @@
+[% unless site_config.error() %]
+<div class="account_box_title">{{gb_labels.c_my_posts[gb_lang]}}</div>
+[% FOREACH advertise IN advertises %]<div class="user_advertise_box" id="ad_[% advertise.id %]">
+	<div><span class="button" onclick="expand_user_ad('[% advertise.id%]');">[% advertise.name %] (viewed: [% advertise.viewed %])</span></div>
+	<div class="user_ad_detail" id="user_ad_detail_[% advertise.id %]" style="display:none;">
+		<div class="devider"></div>
+		<div>[% advertise.description %]</div>
+		<div class="devider"></div>
+		<div>[% if advertise.is_free %]Free offer[% else %]$[% advertise.price %][% end %]</div>
+		<div class="devider"></div>
+		<div>
+			<span class="wide_button" onclick="page_location('/edit_ad?aid=[% advertise.id %]');">{{gb_labels.c_edit_ad[gb_lang]}}</span>
+			<span class="wide_button" onclick="delete_advertise('delete_advertise_form', '[% advertise.id %]');">{{gb_labels.c_delete[gb_lang]}}</span>
+		</div>
+	</div>
+</div>[% END %]
+<form name="delete_advertise_form" target="ajax_imitator" action="[% site_config.config('perl_root') %]/delete_advertise.pl">
+	<input type="hidden" name="aid" />
+</form>
+[% end %]

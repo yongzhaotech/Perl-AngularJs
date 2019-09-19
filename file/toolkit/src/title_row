@@ -1,0 +1,21 @@
+<nav id="ad_title_bar" ng-controller="actionBoxController">
+	<nav class="btn_list">
+	[% if limited_function %]
+		<span class="wide_text">{{gb_labels.c_no_functions[gb_lang]}}</span>
+	[% else %]
+		<div id="menu_launcher">
+			<div class="menu_clker" ng-class="[{menu_clker_active:menu_clker_active}]" onclick="load_menu();">
+				{{gb_labels.c_menu[gb_lang]}}
+			</div>
+		</div>
+		<div class="nav_btn" ng-click="home_page();">
+			{{gb_labels.c_home[gb_lang]}}
+		</div>
+		<div class="nav_btn" ng-click="set_language();">
+			{{gb_labels.c_language[gb_lang]}}
+		</div>
+		<div class="use_mobile">{{gb_labels.c_use_mobile[gb_lang]}}</div>
+		[% include ng_boxes %]
+	[% end %]
+	</nav>
+</nav>

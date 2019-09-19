@@ -1,0 +1,6 @@
+<html>
+	<head><title></title></head>
+	<body onload="parent.window.eEngine.model('message').con(JSON.parse(document.display.content.value),undefined,function(){parent.window.[% execute_js_functions %];});document.display.removeChild(document.display.content);">
+		<form name="display"><textarea name="content" style="display:none;">[% server_response %]</textarea></form>
+    </body>
+</html>

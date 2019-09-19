@@ -1,0 +1,8 @@
+<div class="message_wrapper" ng-if="err_flag">
+	<div class="ang_close" ng-click="clear_screen_errors()">&times;</div>
+	<div class="message">
+		<div class="error" ng-repeat="e in screen_error">
+			{{e}}
+		</div>
+	</div>
+</div>

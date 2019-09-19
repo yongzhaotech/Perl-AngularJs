@@ -1,0 +1,41 @@
+<user-tabs></user-tabs>
+<div id="user_account_box" ng-if="$ctrl.engine.user_signed_in()"><!-- ng-controller="AccountController"-->
+	<form name="change_user_profile" action="/adb/change_user_profile.pl"> 
+		<div class="ad_inline_block">
+			<div class="account_box_title">{{$ctrl.engine.gb_labels('c_basic_info')}}</div>
+		</div><div class="ad_inline_block_top"></div>
+		<div class="ad_inline_block">
+			<div class="account_box_label" ng-if="!$ctrl.Account.errors().first_name">{{$ctrl.engine.gb_labels('c_first_name')}}</div>
+			<div class="account_box_label box_error" ng-if="$ctrl.Account.errors().first_name">{{$ctrl.engine.gb_labels($ctrl.Account.errors().first_name)}}</div>
+		</div><div class="ad_inline_block_top">
+			<div class="account_box_field">
+				<input type="text" name="first_name" maxlength="30" value="{{$ctrl.account.user().first_name}}" />
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="account_box_label" ng-if="!$ctrl.Account.errors().last_name">{{$ctrl.engine.gb_labels('c_last_name')}}</div>
+			<div class="account_box_label box_error" ng-if="$ctrl.Account.errors().last_name">{{$ctrl.engine.gb_labels($ctrl.Account.errors().last_name)}}</div>
+		</div><div class="ad_inline_block_top">
+			<div class="account_box_field">
+				<input type="text" name="last_name" maxlength="30" value="{{$ctrl.account.user().last_name}}" />
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="account_box_label">{{$ctrl.engine.gb_labels('c_eml_addr')}}</div>
+		</div><div class="ad_inline_block_top">
+			<div class="account_box_field"><span style="font-weight:bold;">{{$ctrl.account.user().email}}</span></div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="account_box_label" ng-if="!$ctrl.Account.errors().password">{{$ctrl.engine.gb_labels('c_passwd')}}</div>
+			<div class="account_box_label box_error" ng-if="$ctrl.Account.errors().password">{{$ctrl.engine.gb_labels($ctrl.Account.errors().password)}}</div>
+		</div><div class="ad_inline_block_top">
+			<div class="account_box_field">
+				<input type="password" name="password"  maxlength="40" />
+			</div>
+		</div>
+		<div class="account_box_label">
+			<span ng-class="['btn',{warn_btn:$ctrl.Account.has_screen_error()}]" ng-click="$ctrl.Account.submit('change_user_profile', $ctrl.Account.get_scope())">{{$ctrl.engine.gb_labels('c_upt_profile')}}</span>
+			<input type="hidden" name="session_id" value="{{$ctrl.engine.cookie('session_id')}}" />
+		</div>
+	</form>
+</div>

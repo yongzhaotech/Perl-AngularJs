@@ -1,0 +1,11 @@
+<nav class="btn_list" ng-if="$ctrl.pages.length">
+	<ang-area ng-repeat="page in $ctrl.pages">
+		<div ng-class="['page',{current_page:$ctrl.current_page==page.i}]" ng-if="!$ctrl.search_ad" ng-click="$ctrl.launch_home(page)">
+			{{page.n}}
+		</div>
+		<div ng-class="['page',{current_page:$ctrl.current_page==page.i}]" ng-if="$ctrl.search_ad" ng-click="$ctrl.select_search_page(page)">
+			{{page.n}}
+		</div>
+	</ang-area>
+</nav>
+<div class="block_spacer"></div>

@@ -1,0 +1,7 @@
+<div id="advertise_picture_list">
+[% foreach picture in advertise.get('pictures') %]<div class="ad_detail_picture_wrapper">
+		<div class="ad_detail_picture" title="click to view large picture" ng-click="large_image([% picture.id %])">
+			<img class="ad_image" src="[% site_config.config('web_root') %]/image/ad/big/[% picture.id %].jpg" />
+		</div>
+	</div>[% end %]
+</div>

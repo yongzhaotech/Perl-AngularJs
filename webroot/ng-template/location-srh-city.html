@@ -1,0 +1,14 @@
+<div class="dp_wrapper" ng-if="prov_id">
+	<div class="dp_list">
+		<div ng-switch="prov.c.length">
+			<div ng-switch-when="0">
+				<div ng-class="['dp_option']">...</div>
+			</div>
+			<div ng-switch-default>
+				<div ng-model="city" ng-repeat="city in prov.c">
+					<div ng-class="['dp_option', {selected:city_selected(city)}]" ng-show="show_city(city)" ng-click="select_city(city)">{{city.n[engine.gb_lang()]}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

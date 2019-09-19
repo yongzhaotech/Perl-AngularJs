@@ -1,0 +1,27 @@
+<div id="contact_us_box" class="ad_action_box" ng-show="boxes.box_attached('contact_us')">
+	<form name="contact_us_form" action="[% site_config.config('perl_root') %]/server_request.pl"> 
+		<div class="account_box_title">{{gb_labels.c_contact_us[gb_lang]}}</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().email">{{gb_labels.c_return_eml[gb_lang]}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().email">{{gb_labels[boxes.errors().email][gb_lang]}}</div>
+			<div class="account_box_field"><input type="text" name="email" maxlength="150" /></div>
+		</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().subject">{{gb_labels.c_subject[gb_lang]}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().subject">{{gb_labels[boxes.errors().subject][gb_lang]}}</div>
+			<div class="account_box_field"><input type="text" name="subject" maxlength="30" /></div>
+		</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().message">{{gb_labels.c_message[gb_lang]}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().message">{{gb_labels[boxes.errors().message][gb_lang]}}</div>
+			<div class="account_box_field">
+				<textarea name="message" rows="4" cols="100" onPaste="return false"></textarea>
+			</div>
+		</div>
+		<div class="account_box_label">
+			<input type="hidden" name="f_action" value="contact_us" />
+			<span ng-class="['btn',{warn_btn:boxes.has_screen_error()}]" ng-click="boxes.submit(boxes.get_scope())">{{gb_labels.c_submit[gb_lang]}}</span>
+			<span ng-class="['btn']" ng-click="boxes.detach('contact_us')">{{gb_labels.c_cancel[gb_lang]}}</span>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,39 @@
+<section ng-if="$ctrl.account.loading()">
+	{{$ctrl.engine.gb_labels('loading_data')}}
+</section>
+<div class="page_error" ng-if="$ctrl.account.errors()">
+	<div>{{$ctrl.engine.gb_labels('c_reset_err_title')}}:</div>
+	<div>
+		<ul>
+			<li>{{$ctrl.engine.gb_labels('c_reset_link_done')}}</li>
+			<li>{{$ctrl.engine.gb_labels('c_reset_link_wrong')}}</li>
+		</ul>
+	</div>
+</div>
+<div id="reset_password_box" ng-if="!$ctrl.account.loading() && !$ctrl.account.errors()">
+	<form name="reset_password" action="/adb/reset_password.pl"> 
+		<div class="ad_inline_block">
+			<div class="account_box_title">{{$ctrl.engine.gb_labels('c_set_pwd_title')}}</div>
+		</div><div class="ad_inline_block_top"></div>
+		<div class="ad_inline_block">
+			<div class="account_box_label">{{$ctrl.engine.gb_labels('c_new_pwd_title')}}</div>
+		</div><div class="ad_inline_block_top">
+			<div class="account_box_field">
+				<div class="error" ng-if="$ctrl.fgtPasswd.errors().new_password">{{$ctrl.engine.gb_labels($ctrl.fgtPasswd.errors().new_password)}}</div>
+				<input type="password" name="new_password" maxlength="40" />
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="account_box_label">{{$ctrl.engine.gb_labels('c_con_new_pwd_title')}}</div>
+		</div><div class="ad_inline_block_top">
+			<div class="account_box_field">
+				<div class="error" ng-if="$ctrl.fgtPasswd.errors().confirm_new_password">{{$ctrl.engine.gb_labels($ctrl.fgtPasswd.errors().confirm_new_password)}}</div>
+				<input type="password" name="confirm_new_password" maxlength="40" />
+			</div>
+		</div>
+		<div class="account_box_label">
+			<span ng-class="['btn',{warn_btn:$ctrl.fgtPasswd.has_screen_error()}]" ng-click="$ctrl.fgtPasswd.submit('reset_password', $ctrl.fgtPasswd.get_scope())">{{$ctrl.engine.gb_labels('c_submit')}}</span>
+			<input type="hidden" name="acc_code" value="{{$ctrl.account.acc_code()}}" />
+		</div>
+	</form>
+</div>

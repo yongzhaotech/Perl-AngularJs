@@ -1,0 +1,1 @@
+var is_mobile = false, site_lang = 'en', ad_action_box = null, angular_vars = {inum:10,imb:7,menus:[{n:"c_account",a:"user_account",b:false},{n:"c_post",a:"post_ad",b:false},{n:"c_search",a:"search",b:true},{n:"c_edit",a:"find_visitor_ad",b:true},{n:"c_contact",a:"contact_us",b:true}]};

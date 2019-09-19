@@ -1,0 +1,95 @@
+<script type="text/javascript" language="JavaScript">
+	var statuses = { 0:'inactive', 1:'active' };
+	var actions = { 0:'deactivate_ad', 1:'activate_ad' };
+	function set_status(s_a, a_a, c, s) {
+		var s_a_f = document.forms[s_a];
+		var a_a_f = document.forms[a_a];
+		a_a_f['id'].value = s_a_f['id_' + c].value;
+		s_a_f['status_' + c].value = statuses[s];
+		a_a_f['admin_action'].value = actions[s]; 
+		a_a_f.submit();
+	}
+	function remove_ad(s_a, a_a, c) {
+		var s_a_f = document.forms[s_a];
+		var a_a_f = document.forms[a_a];
+		a_a_f['id'].value = s_a_f['id_' + c].value;
+		a_a_f['admin_action'].value = 'delete'; 
+		a_a_f.submit();
+	}
+	function remove_ad_row(id) {
+		var ad_obj = eEngine.dom('advertise_' + id);
+		get_parent(ad_obj).removeChild(ad_obj);
+	}
+	function get_parent(obj) {
+		if(obj) {
+			return obj.parentElement ? obj.parentElement : obj.parentNode;
+		}
+	}
+</script>
+<user-tabs></user-tabs>
+<section ng-if="$ctrl.account.loading()">
+	{{$ctrl.engine.gb_labels('loading_data')}}
+</section>
+<div class="site_config_error" ng-if="$ctrl.account.errors()">
+    {{$ctrl.account.error_message}}
+</div>
+<section ng-if="!$ctrl.account.loading() && !$ctrl.account.errors() && $ctrl.engine.user_signed_in() && $ctrl.account.user().access_level * 1 > 1">
+	<nav class="btn_list" ng-if="$ctrl.pages().length">
+		<div ng-class="['page',{current_page:$ctrl.current_page()==page.i}]" ng-repeat="page in $ctrl.pages()" ng-click="$ctrl.account.fetch_adm_ads(page)">
+			{{page.n}}
+		</div>
+	</nav>
+	<div class="devider"></div>
+	<form style="margin:0" name="set_advertise">
+		<table style="width:100%" border="0" cellpadding="2" cellspacing="2">
+			<tr style="font-weight:bold;">
+				<td>Ad Name</td>
+				<td>Poster</td>
+				<td>Emai</td>
+				<td>Phone</td>
+				<td>Post Id</td>
+				<td>Post Date</td>
+				<td>Status</td>
+				<td>Apply Change</td>
+			</tr>
+			<tr id="advertise_{{ad.id}}" ng-class="['even', {odd:$ctrl.account.odd_row($index)}]" ng-repeat="ad in $ctrl.ads()">
+				<td>
+					{{ad.name}}
+				</td>
+				<td ng-if="ad.poster">
+					{{ad.poster}}
+				</td>
+				<td ng-if="!ad.poster">
+					Unkwon Visitor
+				</td>
+				<td>
+					{{ad.contact_email}}
+				</td>
+				<td>
+					{{ad.contact_phone}}
+				</td>
+				<td>
+					{{ad.post_id}}
+				</td>
+				<td>
+					{{ad.create_time}}
+				</td>
+				<td>
+					<input type="text" name="status_{{$index}}" value="active" readonly ng-if="(ad.active * 1)" />
+					<input type="text" name="status_{{$index}}" value="inactive" readonly ng-if="!(ad.active * 1)" />
+					<input type="hidden" name="id_{{$index}}" value="{{ad.id}}" />
+				</td>
+				<td>
+					<input type="button" ng-click="$ctrl.set_status('set_advertise', 'apply_advertise', $index, '1');" value="activate" />
+					<input type="button" ng-click="$ctrl.set_status('set_advertise', 'apply_advertise', $index, '0');" value="deactivate" />
+					<input type="button" ng-click="$ctrl.remove_ad('set_advertise', 'apply_advertise', $index);" value="delete" />
+				</td>
+			</tr>
+		</table>
+	</form>
+	<form style="margin:0" target="ajax_imitator" name="apply_advertise" action="/adb/admin_function.pl">
+		<input type="hidden" name="id" />
+		<input type="hidden" name="admin_action" />
+		<input type="hidden" name="session_id" value="{{$ctrl.engine.cookie('session_id')}}" />
+	</form>
+</section>

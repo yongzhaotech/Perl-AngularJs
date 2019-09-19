@@ -1,0 +1,73 @@
+#! /usr/bin/perl
+use strict;
+use warnings;
+use Class::Initialize;
+use Class::Time;
+use Class::Utility qw(trim site_encryption valid_email js_clean format_message valid_token j_son_js);
+use Class::Language;
+
+my $init	= new Class::Initialize();
+my $cgi		= $init->cgi();
+my @error	= ();
+my $temp	= undef;
+my $reply	= undef;
+
+my $token 		= trim($init->cgi()->param('token'));
+my $email		= lc(trim($init->cgi()->param('email')));
+my $password	= $init->cgi()->param('password');
+my $user		= undef;
+
+$init->apr()->content_type("text/html");
+if(!valid_token($init->sql(), $token)) {
+	print $reply;
+	return Apache2::Const::OK
+}
+
+if($email eq '') {
+	push(@error, LANG_LABELS->{r_email}->{$init->cookie()->get('lang')});
+}elsif(!valid_email($email)) {
+	push(@error, LANG_LABELS->{w_email}->{$init->cookie()->get('lang')});
+}else {
+	$user = ($init->sql()->query('select', 'user', { email => $email }))[0];
+	if(!defined $user) {
+		push(@error, LANG_LABELS->{email_not_found}->{$init->cookie()->get('lang')});
+	}else {
+		if(!$user->{active}) {
+			push(@error, "This account has not been activated yet, have you ever checked your email for the account activation?");
+		}elsif($user->{locked}) {
+			push(@error, "This account has been locked for security concern, have you ever checked your email to have the account unlocked?");
+		}	
+	}
+}
+
+if(!@error) {
+	if($password eq '') {
+		push(@error, LANG_LABELS->{r_password}->{$init->cookie()->get('lang')});
+	}else {
+		if($user->{password} ne site_encryption($email, $password, $init->config('encript'))) {
+			push(@error, LANG_LABELS->{wrong_password}->{$init->cookie()->get('lang')});
+		}
+	}
+}
+
+if(@error) {
+	print $init->toolkit('ng_errors')->string({ server_response => j_son_js(\@error) });
+}else {
+	use Class::User;
+	use Class::Session;
+	my $time = new Class::Time();
+	my $now = $time->call('international');
+	my $cookie = $init->cookie();	
+	my $user_o = new Class::User($init->sql(), $user->{id});
+	my $session = new Class::Session($init->sql());
+	$session->update($init->sql());
+	$user_o->set({session_id=>$session->id(),signin_count=>($user_o->get('signin_count') + 1),last_sign_in=>($user_o->get('last_sign_in') ? $user_o->get('last_sign_in').','.$now : $now)});
+	$cookie->set({session_id=>$session->id()});
+	$init->session($session);
+	$init->user($user_o);
+	$session->set({user_id=>$user->{id}});
+	$init->sql()->execute_stmt("delete from server_token where token=?", [$token]);
+	$init->sql()->commit();
+	print $init->toolkit('load_page')->string({ page => 'user_account' });
+}
+return Apache2::Const::OK

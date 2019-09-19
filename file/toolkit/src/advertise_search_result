@@ -1,0 +1,10 @@
+<form style="margin:0;" name="re_search_advertise" method="post" target="ajax_imitator" action="[% site_config.config('perl_root') %]/search_advertise.pl">
+	[% page_list %]
+	<input type="hidden" name="ad_keyword" value="[% keyword %]" />
+	<input type="hidden" name="category" value="[% category %]" />
+	<input type="hidden" name="item" value="[% item %]" />
+	<input type="hidden" name="province" value="[% province %]" />
+	<input type="hidden" name="city" value="[% city %]" />
+	<input type="hidden" name="start" />
+</form>
+[% include advertise %]

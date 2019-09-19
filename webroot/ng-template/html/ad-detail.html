@@ -1,0 +1,59 @@
+<search-terms></search-terms>
+<div class="ad_detail_title">
+	{{$ctrl.engine.gb_labels('c_ad_detail_title')}}
+</div>
+<div class="ad_detail_wrapper" id="big_picture">
+	<div class="ad_detail_img">
+		<img class="ad_image" id="advertise_main_picture" ng-src="/ads/image/ad/big/{{$ctrl.advertise.main_picture}}.jpg" ng-click="$ctrl.large_image({i:$ctrl.advertise.main_picture})" />
+	</div>
+</div><div class="ad_detail_wrapper">
+	<div class="ad_detail_tab">
+		<div class="devider"></div>
+		<div><span class="wide_button" ng-click="$ctrl.boxes.attach_mailer($ctrl.advertise, 'ask_poster')">{{$ctrl.engine.gb_labels('c_contact_poster_link')}}</span></div>
+		<div class="devider"></div>
+		<div><span class="wide_button" ng-click="$ctrl.boxes.attach_mailer($ctrl.advertise, 'email_friend')">{{$ctrl.engine.gb_labels('c_email_friend_link')}}</span></div>
+	</div>
+</div><div class="ad_detail_wrapper">
+	<div class="ad_detail_fun">
+		<div class="devider"></div>
+		<div class="ad_title">
+			{{$ctrl.advertise.name}}
+		</div>
+		<div class="devider"></div>
+		<div class="ad_detail">
+			<span ng-if="$ctrl.advertise.is_free != '0'">{{$ctrl.engine.gb_labels('c_free_offer')}}</span>
+			<div class="ad_title" ng-if="$ctrl.advertise.is_free == '0'">{{$ctrl.engine.gb_labels('c_ad_scr_price')}}: {{$ctrl.advertise.price_display[$ctrl.engine.gb_lang()]}}</div>
+		</div>
+		<div class="devider"></div>
+		<div class="devider"></div>
+		<div class="ad_detail">{{$ctrl.engine.gb_labels('c_ad_scr_location')}}:</div>
+		<div class="ad_title">
+			<div>{{$ctrl.advertise.province[$ctrl.engine.gb_lang()]}}</div>
+			<div>{{$ctrl.advertise.city[$ctrl.engine.gb_lang()]}}</div>
+			<div>{{$ctrl.advertise.location[$ctrl.engine.gb_lang()]}}</div>
+		</div>
+		<div class="devider"></div>
+		<div class="ad_title">
+			<div>{{$ctrl.advertise.category[$ctrl.engine.gb_lang()]}}</div>
+			<div>{{$ctrl.advertise.item[$ctrl.engine.gb_lang()]}}</div>
+		</div>
+		<section ng-if="$ctrl.engine.by_phone($ctrl.advertise)">
+			<div class="devider"></div>
+			<div>
+				{{$ctrl.engine.gb_labels('c_call_poster')}}: <font style="font-weight:bold;"><a href="tel:{{$ctrl.advertise.contact_phone}}">{{$ctrl.advertise.contact_phone}}</a></font>
+			</div>
+		</section>
+	<!-- add additional ad information here -->
+	</div>
+</div>
+<div id="advertise_picture_list">
+	<div class="ad_detail_picture_wrapper" ng-repeat="picture in $ctrl.advertise.picture_ids">
+        <div class="ad_detail_picture" title="click to view large picture" ng-click="$ctrl.large_image({i:picture.i})">
+            <img class="ad_image" ng-src="/ads/image/ad/big/{{picture.i}}.jpg" />
+        </div>
+    </div>
+</div>
+<div class="ad_detail_desc">
+	<div class="ad_name">{{$ctrl.engine.gb_labels('c_ad_scr_detail')}}</div>
+	<div ng-bind-html="$ctrl.advertise.ad_description[$ctrl.engine.gb_lang()]"></div>
+</div>

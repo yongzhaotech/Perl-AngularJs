@@ -1,0 +1,5 @@
+<script>
+	var angular_vars={terms:[% if search_terms %][% search_terms %][% else %][][% end %],ad:[% if angular_ad %][% angular_ad %][% else %]{}[% end %],ads:[% if angular_ads %][% angular_ads %][% else %][][% end %],ad_pages:[% if angular_ad_pages %][% angular_ad_pages %][% else %]{c:0,p:[]}[% end %],inum:[% site_config.config('maximum_image_number') %],imb:[% site_config.config('maximum_image_byte') %],menus:[{n:"c_account",a:"user_account",b:false},{n:"c_post",a:"post_ad",b:false},{n:"c_search",a:"search",b:true},{n:"c_edit",a:"find_visitor_ad",b:true},{n:"c_contact",a:"contact_us",b:true}]};
+	var search_items={search_advertise:{province:'[% search_item.pr %]',city:'[% search_item.ct %]',category:'[% search_item.ca %]',item:'[% search_item.it %]',ad_keyword:'[% search_item.kw %]'}};
+	var site_config_error='[% if site_config.error %]{"error":"[% site_config.error %]"}[% end %]';
+</script>

@@ -1,0 +1,63 @@
+<html>
+  <head>
+    [% DEFAULT title = "Delicious Cantonese, Sichuan, Japanese and Thai Cuisines - China Feast Restaurant / Chinese Kitchen Delights, Chinese Restaurants, Toronto Restaurants, Restaurants In Ontario, Restaurants And Food Delivery, chinese food in Toronto! Canada Food Business" %]
+	[% DEFAULT meta_description = "Your favorite dishes in China Feast" %]
+	<meta name="verify-v1" content="cEX9aq0Bij6AWuL6LHpgvWTrOFumQD7fXe0gSAmQ/u0=" />
+	<meta name="description" content="The best Toronto take out food delivery menus online serving Cantonese, Szechuan, Chinese food. Rate the restaurants order online and pay by credit card or cash, delivery in 30-50 mins">
+	<meta name="keywords" content="[% meta_description %]">    
+	<title>Chinese Food, Cantonese, Szechuan, Thai Restaurants; Takeout, pick-up | Order Online at chinafeast.ca</title>
+    <link rel="stylesheet" type="text/css" href="/chinafeast/library/style/main.css">
+    <link rel="stylesheet" type="text/css" href="/chinafeast/library/style/link.css">
+	<link rel="shortcut icon" href="" />
+    <script type="text/javascript" language="JavaScript" src="/chinafeast/library/jscript/dhtml.js"></script>
+	<script type="text/javascript" language="JavaScript" src="/chinafeast/library/jscript/order.js"></script>
+  </head>
+<body onLoad="InitializeVars();[% IF cf_launcher %]CalBrowser();[% END %]">
+<div id="cf_tooltip" class="tooltip_resurrectable"></div>
+<div id="cf_image_box" style="position:absolute;z-index:100;display:none;padding:0px;border-width:0px;"></div>
+<div id="cf_image_store" class="not_resurrectable"></div>
+<div class="not_resurrectable"><form name="shared_app_fm"><input type="hidden" name="shared_app_fm_items_holder" /><!-- add additional fields if necessary --></form></div>
+<table cellspacing="0" cellpadding="0" border="0" width="100%" class="parent">
+<tr>
+<td width="800" class="recipe_book"><!-- start book -->
+<table class="main" cellspacing="0" cellpadding="0" border="0">
+	<tr>
+		<td class="header" colspan="2">
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr>
+					<td width="350" rowspan="2">
+						<div class="cf_logo" id="cf_new_cuisine"></div>
+						<div class="cf_logo_text">
+							<div class="services"><img src="/chinafeast/image/gui/brands.gif" title="We accept Visa, MasterCard, American Express and Interac payments" /></div>
+							<div class="services">Delivery & Takeout<br />Served in Toronto for over 20 years</div>
+							<div class="cf_url"><a href="/menus/cuisine">chinafeast.ca</a></div>
+						</div>
+					</td>
+					<td class="search_cell">
+						Thank you for choosing China Feast / Chinese Kitchen Delights	
+						<div class="no_msg">MSG</div>
+						<div class="services">
+							<span class="CFT1">Free</span> local delivery starts at $15.00<br />
+							<span class="CFT2">10% Off</span> on pick-up order over $15.00 (CASH ONLY)
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="search_cell">
+						<form name="search_engine">
+							<table align="right" cellspacing="0" cellpadding="1" border="0">
+								<tr>
+									<td>Menu search:</td>
+									<td><input name="keyword" type="text" class="search_criteria" onFocus="focusSearch();" /></td>
+									<td><img src="/chinafeast/image/gui/k_search.gif" class="anchor" onClick="CFKeywordSearch()" title="Quick dish finder" /></td>
+								</tr>
+							</table>
+						</form>	
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr><td colspan="2"><img src="/chinafeast/image/gui/s.gif" width="1" height="10" /></td></tr>
+	<tr>
+		[% INCLUDE side_navigator %]

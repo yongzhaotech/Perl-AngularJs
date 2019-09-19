@@ -1,0 +1,21 @@
+[% if page_list %]<form style="margin:0px 5px" name="page_selection_frm">[% page_list %]</form>[% end %]
+[% foreach advertise in advertises %]<div class="ad_wrapper">
+	[% name = advertise.name %]
+	[% name = name.replace('[\']', '\\\'') %]
+		<div class="ad_block">
+			<div class="block_icon" onclick="page_location('[% site_config.config('web_root') %]/html/[% language %]/[% advertise.html %]');"><img src="[% site_config.config('web_root') %]/image/ad/big/[% advertise.picture_id %].jpg" class="ad_image" /></div>
+			<div class="block_spacer"></div>
+			<div class="block_price"><span class="picture_number">[% advertise.price_display %]</span></div>
+			<div class="block_price">[% com_labels.${language}.ad_listed %]: [% advertise.create_date %]</div>
+			<div class="block_info"><span class="button" onclick="page_location('[% site_config.config('web_root') %]/html/[% language %]/[% advertise.html %]');">[% advertise.name %]</span></div>
+			<div class="block_info"><span>[% city_names.${advertise.city_id} %]</span>, <span>[% province_names.${advertise.province_id} %]</span></div>
+			<div class="block_info">
+				<div class="contact_icon">
+				[% if advertise.contact_method.match('\b(contact_)?email\b') %]<span class="email_icon"><img class="button" src="[% site_config.config('web_root') %]/image/gui/email.gif" onclick="launch_email_contact({i:'[% advertise.id %]',n:'[% name %]'});" /></span>[% end %]
+				[% if advertise.contact_method.match('\bcontact_phone\b') %]<span><a href="tel:[% advertise.contact_phone %]"><img class="button" src="[% site_config.config('web_root') %]/image/gui/cell.gif" /></a></span>[% end %]
+				</div>
+			</div>
+			<div class="block_spacer"></div>
+		</div>
+		<div class="block_spacer"></div>
+	</div>[% end %]

@@ -1,0 +1,17 @@
+<footer>
+	<div class="footer">
+		<span class="copy_right">&copy; 2017 esaleshome.com</span>
+	</div>
+	<div class="facebook">
+		<div class="inline_block">
+			<div class="fb-like" data-href="http://esaleshome.com" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
+		</div>
+	</div>
+	<div id="ang_message_wrapper" ng-controller="messageController">
+		<div screen-message type="error"></div>
+		<div screen-message type="success"></div>
+		<div screen-message type="image"></div>
+		<div screen-message type="column"></div>
+		<div screen-message type="menu"></div>
+	</div>
+</footer>

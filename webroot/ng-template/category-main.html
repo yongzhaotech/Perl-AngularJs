@@ -1,0 +1,11 @@
+<div class="dp_wrapper">
+	<div class="dp_list">
+		<div>
+			<div ng-if="expand_cat && cat_id" ng-click="select_cat(cat_obj)"class="option_title">{{cat_obj.n[engine.gb_lang()]}}</div>
+			<div ng-model="cat" ng-repeat="cat in cat_list">
+				<div ng-class="['dp_option', {selected:cat_selected(cat),option_hint:!expand_cat}]" ng-show="show_cat(cat)" ng-click="select_cat(cat)">{{cat.n[engine.gb_lang()]}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+<input type="hidden" name="category" value="{{cat.i}}" />

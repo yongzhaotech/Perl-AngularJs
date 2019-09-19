@@ -1,0 +1,219 @@
+#! /usr/bin/perl
+use strict;
+use warnings;
+use Class::Initialize;
+use Class::Email;
+use Class::Utility qw(trim is_nothing valid_email html_paragraph create_visitor_ad_data validate_acc_code j_son_js j_son gen_token);
+use Class::Language;
+
+my $init	= new Class::Initialize();
+my $action	= $init->cgi()->param('action') || $init->cgi()->param('f_action');
+my $lang = $init->lang();
+my @error	= ();
+my $reply	= undef;
+
+$init->apr()->content_type("application/json");
+
+if($action eq 'hits') {
+	my $uri = $init->cgi()->param('uri');
+	$init->sql()->execute_stmt(qq|insert into visitor_hits (ip,create_time,uri) VALUES (?,now(),?)|,[$init->ip(), $uri]);
+	$init->sql()->commit();
+	$reply = qq|{"message":"ok"}|;
+}elsif($action eq 'contact_us') {
+	my $email	= lc(trim($init->cgi()->param('email')));
+	my $message	= trim($init->cgi()->param('message')); 
+	my $subject = trim($init->cgi()->param('subject'));
+	if($email eq '') {
+		push(@error, LANG_LABELS->{r_email}->{$lang});
+	}elsif(!valid_email($email)) {
+		push(@error, LANG_LABELS->{w_email}->{$lang});
+	}
+	if($subject eq '') {
+		push(@error, LANG_LABELS->{r_subject}->{$lang});
+	}
+	if(is_nothing($message)) {
+		push(@error, LANG_LABELS->{r_message}->{$lang});
+	}
+	if(!@error) {
+		my $mail = new Class::Email();
+		$mail->from($init->config('info_email'));
+		$mail->reply_to($email);
+		$mail->subject($subject);
+		$mail->to($init->config('admin_email'));
+		$mail->body({plain => $message, html => $message});
+		$mail->send();
+		$reply = qq|{"message":|.j_son_js([LANG_LABELS->{contact_sent}->{$lang}]).qq|}|;
+	}
+}elsif($action eq 'ask_poster') {
+	my $id		= $init->cgi()->param('advertise_id');
+	my $email	= lc(trim($init->cgi()->param('email')));
+	my $message	= trim($init->cgi()->param('message')); 
+	if($email eq '') {
+		push(@error, LANG_LABELS->{r_email}->{$lang});
+	}elsif(!valid_email($email)) {
+		push(@error, LANG_LABELS->{w_email}->{$lang});
+	}
+	if(is_nothing($message)) {
+		push(@error, LANG_LABELS->{r_message}->{$lang});
+	}
+	if(!@error) {
+		my $lang = $lang;
+		my $ad = ($init->sql()->query('select', 'advertise', { id => $id }, ['html','currency','name','user_id','price','contact_method','contact_email','create_time','now() as today']))[0];
+		if(defined $ad) {
+			$ad->{create_time} =~ s/ .*//;
+			my $user = ($init->sql()->query('select', 'user', { id => $ad->{user_id} }, ['first_name','last_name','email']))[0];
+			my $title = $ad->{contact_method} =~ /\bemail\b/ ? LANG_LABELS->{buddy}->{$lang} : ($lang eq 'en' ? "$user->{first_name} $user->{last_name}" : "$user->{last_name} $user->{first_name}");
+			my $rcpt = $ad->{contact_method} =~ /\bemail\b/ ? $ad->{contact_email} : $user->{email};
+			my $body = {
+				plain => $init->toolkit("ask_poster_plain_$lang")->string({
+					crlf => "\n",
+					title => $title,
+					email => $email,
+					name => $ad->{name},
+					time => $ad->{create_time},
+					price => LANG_LABELS->{'currency_'.$ad->{currency}}->{$lang}.$ad->{price},
+					message => $message,
+					domain => $init->config('domain'),
+					today => $ad->{today}
+				}),
+				html => $init->toolkit("ask_poster_html_$lang")->string({
+					title => $title,
+					email => $email,
+					web_root => $init->config('web_root'),
+					id => $id,
+					name => $ad->{name},
+					time => $ad->{create_time},
+					price => LANG_LABELS->{'currency_'.$ad->{currency}}->{$lang}.$ad->{price},
+					message => html_paragraph($message),
+					domain => $init->config('domain'),
+					today => $ad->{today}
+				})
+			};
+			my $mail = new Class::Email();
+			$mail->reply_to($email);
+			$mail->to($rcpt);
+			$mail->from($init->config('info_email'));
+			$mail->subject($ad->{name});
+			$mail->body($body);
+			$mail->send();
+			$reply = qq|{"message":|.j_son_js([LANG_LABELS->{msg_sent_to_seller}->{$lang}]).qq|}|;
+		}else {
+			push(@error, LANG_LABELS->{no_ad_found}->{$lang});
+		}
+	}
+}elsif($action eq 'email_friend') {
+	my $sender = lc(trim($init->cgi()->param('email')));
+	my $friend = lc(trim($init->cgi()->param('friend_email')));
+	my $aid = trim($init->cgi()->param('advertise_id'));
+	my $ad = undef;
+	if($sender eq '') {
+		push(@error, LANG_LABELS->{r_email}->{$lang});
+	}elsif(!valid_email($sender)) {
+		push(@error, LANG_LABELS->{w_email}->{$lang});
+	}
+	if($friend eq '') {
+		push(@error, LANG_LABELS->{r_friend_email}->{$lang});
+	}elsif(!valid_email($friend)) {
+		push(@error, LANG_LABELS->{w_friend_email}->{$lang});
+	}
+	if($aid eq '') {
+		push(@error, LANG_LABELS->{info_missing}->{$lang});
+	}
+	if(!@error) {
+		my @ad = $init->sql()->query('select', 'advertise', { id => $aid }, ['html','currency','name','price','create_time','now() as today']);
+		if(@ad) {
+			$ad = $ad[0];
+		}else {
+			push(@error, LANG_LABELS->{no_ad_found}->{$lang});
+		}
+	}
+	if(!@error) {
+		$ad->{create_time} =~ s/ .*//;
+		my $body = {
+			plain => $init->toolkit('email_to_friend_plain_'.$lang)->string({
+				crlf => "\n",
+				sender => $sender,
+				name => $ad->{name},
+				time => $ad->{create_time},
+				price => LANG_LABELS->{'currency_'.$ad->{currency}}->{$lang}.$ad->{price},
+				domain => $init->config('domain'),
+				today => $ad->{today}
+			}),
+			html => $init->toolkit('email_to_friend_html_'.$lang)->string({
+				sender => $sender,
+				web_root => $init->config('web_root'),
+				id => $aid,
+				name => $ad->{name},
+				time => $ad->{create_time},
+				price => LANG_LABELS->{'currency_'.$ad->{currency}}->{$lang}.$ad->{price},
+				domain => $init->config('domain'),
+				today => $ad->{today}
+			})
+		};
+		my $mail = new Class::Email();
+		$mail->reply_to($sender);
+		$mail->from($init->config('info_email'));
+		$mail->subject(LANG_LABELS->{friend_share_sub}->{$lang});
+		$mail->to($friend);
+		$mail->body($body);
+		$mail->send();
+		$reply = qq|{"message":|.j_son_js([LANG_LABELS->{link_sent}->{$lang}." $friend"]).qq|}|;
+	}
+}elsif($action eq 'find_visitor_ad') {
+	my $email_phone = lc(trim($init->cgi()->param('email_phone')));
+	my $post_id = trim($init->cgi()->param('post_id'));
+	my @ads = $init->sql()->query('select', 'select id, user_id from advertise where post_id=? and (contact_phone=? or contact_email=?)', [$post_id, $email_phone, $email_phone]);
+	if(!@ads) {
+		push(@error, LANG_LABELS->{no_retrieve_result}->{$lang});
+	}else {
+		my ($id, $uid) = ($ads[0]->{id}, $ads[0]->{user_id});	
+		require Class::Session;
+		my $session = undef;
+		if(defined $init->cookie()->get('v_session_id')) {
+			$session = new Class::Session($init->sql(), $init->cookie()->get('v_session_id'));
+			if(defined $session) {
+				if($session->expires()) {
+					$session->delete();
+					$init->cookie()->delete(("v_session_id"));
+					$session = undef;
+				}else {
+					$session->update();
+				}
+			}
+		}
+		if(!defined $session) {
+			$session = new Class::Session($init->sql());
+			$session->update();
+			$init->cookie()->set({v_session_id=>$session->id()});
+		}
+		$session->set({v_ad_id=>$id, v_user_id=>$uid, v_post_id=>$post_id});
+		# create a temporay session and add the ad id into the session
+		$reply = j_son({ok=>1});
+	}
+}elsif($action eq 'fetch_visitor_ad') {
+	my $page_data = {};
+	create_visitor_ad_data($init, $page_data);
+	if($page_data->{angular_ad}) {
+		$reply = qq|{"angular_ad":|.$page_data->{angular_ad}.qq|}|;
+	}else {
+		$reply = j_son({error=>'Error'});
+	}
+}elsif($action eq 'gen_token') {
+	$init->apr()->content_type("application/json");
+	$reply = j_son({token=>gen_token($init->sql())});
+}elsif($action eq 'validate_acc_code') {
+	my $page_data = {};
+	validate_acc_code($init, $page_data);
+	if($page_data->{ok}) {
+		$reply = $page_data->{ok};
+	}else {
+		$reply = j_son({error=>'Error'});
+	}
+}
+
+if(@error) {
+	$reply = qq|{"error":|.j_son_js(\@error).qq|}|;
+}
+
+print $reply;
+return Apache2::Const::OK

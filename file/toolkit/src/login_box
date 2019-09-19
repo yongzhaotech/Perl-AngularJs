@@ -1,0 +1,24 @@
+<div id="login_box" class="ad_action_box" ng-show="boxes.box_attached('login')">
+	<form name="login_form" action="[% site_config.config('perl_root') %]/sign_in.pl">
+		<div class="account_box_title">{{gb_labels.c_sign_in[gb_lang]}}</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().email">{{gb_labels.c_eml_addr[gb_lang]}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().email">{{gb_labels[boxes.errors().email][gb_lang]}}</div>
+			<div class="account_box_field"><input type="text" name="email" placeholder="account.name@example.com" /></div>
+		</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().password">{{gb_labels.c_passwd[gb_lang]}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().password">{{gb_labels[boxes.errors().password][gb_lang]}}</div>
+			<div class="account_box_field"><input type="password" name="password" placeholder="Abc56789" /></div>
+		</div>
+		<div>
+			<div class="account_box_label">
+				<span ng-class="['btn',{warn_btn:boxes.has_screen_error()}]" ng-click="boxes.submit(boxes.get_scope())">{{gb_labels.c_sign_in[gb_lang]}}</span>
+				<span ng-class="['btn']" ng-click="boxes.detach('login')">{{gb_labels.c_cancel[gb_lang]}}</span>
+			</div>
+		</div>
+		<div>
+			<span class="button" ng-click="boxes.attach('forget_password');">{{gb_labels.c_fgt_passwd[gb_lang]}}</span>
+		</div>
+	</form>
+</div>

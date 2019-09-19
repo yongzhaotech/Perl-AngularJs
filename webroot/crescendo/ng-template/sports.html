@@ -1,0 +1,15 @@
+<section class='container'>
+	<div class='loading' ng-if="!$ctrl.loadDone">Loading requested data...</div>
+	<div ng-if="$ctrl.loadDone">
+		<nav class='sport_nav_list'>
+			<nav class='sport_nav'>Sports</nav>
+		</nav>
+		<div class='sport title'>
+			{{$ctrl.sports.length}} sports found
+		</div>
+		<div class='sport' ng-repeat="sport in $ctrl.sports | orderBy:sortOrder">
+			<span class='link' ng-click="$ctrl.selectSport(sport)">{{sport.name}}</span>
+			<div class='tick' ng-click="$ctrl.selectSport(sport)">&#10093;</div>
+		</div>
+	</div>
+</section>

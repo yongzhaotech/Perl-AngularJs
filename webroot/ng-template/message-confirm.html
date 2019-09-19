@@ -1,0 +1,8 @@
+<div class="message_wrapper" ng-if="msg_flag">
+	<div class="ang_close" ng-click="clear_success_messages()"></div>
+	<div class="message">
+		<div class="success" ng-repeat="m in success_message">
+			{{m}}
+		</div>
+	</div>
+</div>

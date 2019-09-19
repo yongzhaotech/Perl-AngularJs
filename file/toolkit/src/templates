@@ -1,0 +1,8 @@
+<div ng-app="esales">
+    <div ng-controller="postController">
+        <div ad-location type="province"></div>
+        <div ad-location type="city"></div>
+        <div ad-category type="main"></div>
+        <div ad-category type="sub"></div>
+    </div>
+</div>

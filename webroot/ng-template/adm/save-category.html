@@ -1,0 +1,47 @@
+<user-tabs></user-tabs>
+<section ng-if="$ctrl.account.loading()">
+	{{$ctrl.engine.gb_labels('loading_data')}}
+</section>
+<div class="site_config_error" ng-if="$ctrl.account.errors()">
+    {{$ctrl.account.error_message}}
+</div>
+<section ng-if="!$ctrl.account.loading() && !$ctrl.account.errors() && $ctrl.engine.user_signed_in() && $ctrl.account.user().access_level * 1 > 1">
+	<form name="add_category" action="/adb/save_category.pl">
+		<div class="account_box_title">Create a New Category</div>
+		<div>
+			<div class="account_box_label">Category</div>
+			<div class="account_box_field"><input type="text" name="new_category" maxlength="60" /></div>
+			<div class="account_box_field"><input type="text" name="new_category_cn" maxlength="60" /></div>
+		</div>
+		<div class="account_box_label">
+			<input type="button" name="smt_category" value="Add" onclick="check_input_fields(this.form);" />
+			<input type="hidden" name="frm_action" value="new_category" />
+			<input type="hidden" name="session_id" value="{{$ctrl.engine.cookie('session_id')}}" />
+		</div>
+	</form>
+	<div class="devider"></div>
+	<form name="edit_category" action="/adb/save_category.pl">
+		<div>
+			<div class="account_box_title">Change the category text</div>
+			<div class="account_box_label">Select a category to change</div>
+			<div class="account_box_field">
+				<select name="category" onchange="load_to_change(this.form, this, 'new_category', 'new_category_cn', 'edit_category_obj');">
+					<option value=""></option>
+					<option value="{{category.id}}" ng-repeat="category in $ctrl.categories()">{{category.name}}::{{category.name_cn}}</option>
+				</select>
+			</div>
+		</div>
+		<div id="edit_category_obj" style="display:none;">
+			<div>
+				<div class="account_box_label">Category</div>
+				<div class="account_box_field"><input type="text" name="new_category" maxlength="60" /></div>
+				<div class="account_box_field"><input type="text" name="new_category_cn" maxlength="60" /></div>
+			</div>
+			<div class="account_box_label">
+				<input type="button" name="edit_category" value="Edit" onclick="check_input_fields(this.form);" />
+				<input type="hidden" name="frm_action" value="edit_category" />
+				<input type="hidden" name="session_id" value="{{$ctrl.engine.cookie('session_id')}}" />
+			</div>
+		</div>
+	</form>
+</section>

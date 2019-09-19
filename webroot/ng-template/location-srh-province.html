@@ -1,0 +1,10 @@
+<div class="dp_wrapper">
+	<div class="dp_list">
+		<div>
+			<div ng-model="prov" ng-repeat="prov in prov_list">
+				<div ng-if="display_group(prov)" ng-class="['dp_title']" ng-show="show_prov(prov) && expand_prov">{{prov.s[engine.gb_lang()]}}</div>
+				<div ng-class="['dp_option', {selected:prov_selected(prov)}]" ng-show="show_prov(prov)" ng-click="select_prov(prov)">{{prov.n[engine.gb_lang()]}}</div>
+			</div>
+		</div>
+	</div>
+</div>

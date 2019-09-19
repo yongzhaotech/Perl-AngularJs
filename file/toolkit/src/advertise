@@ -1,0 +1,8 @@
+<section id="ang_ad_list_wrapper" ng-controller="adsListController">
+	<search-terms></search-terms>
+	<section><div class="ad_detail_title" ng-if="other_ads()">{{gb_labels.r_other_ads[gb_lang]}}</div></section>
+	<pages-list></pages-list>
+	<ads-list></ads-list>
+	<ad-mail type="email-contact"></ad-mail>
+	<ad-mail type="email-friend"></ad-mail>
+</section>

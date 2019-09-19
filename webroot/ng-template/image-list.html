@@ -1,0 +1,18 @@
+<div ng-if="image_found(count) || image_selected(count)" ng-repeat="count in images" class="img_wrapper">
+	<span ng-if="image_found(count)">
+		<img class="img_selected" ng-src="/ads/image/ad/small/{{count}}.jpg" align="top" />
+	</span>
+	<span ng-if="image_selected(count)">
+		<img class="img_selected" ng-src="{{selected_images[count]}}" align="top" />
+	</span>
+</div>
+<div class="error" ng-if="image_error">{{engine.gb_labels(image_error)}}</div>
+<div ng-repeat="count in images" ng-class="['image_line',{image_selected:image_selected(count),image_error:image_error_num == count}]">
+	<nav class="btn_list">
+		<div ng-class="['tab',{active:main_picture_id == count}]" ng-click="set_main_picture(count)">{{engine.gb_labels('p_main')}}</div>
+		<div class="tab" ng-click="rm_ad_image(count)">{{engine.gb_labels('p_delete')}}</div>
+		<div class="tab" ng-click="browse_ad_image(count)" ng-if="!image_found(count)">{{engine.gb_labels('p_browse')}}</div>
+	</nav>
+</div>
+<input type="hidden" name="main_picture_id" value="{{main_picture_id}}" />
+<input type="hidden" name="remove_ad_image" value="{{remove_ad_image()}}" />

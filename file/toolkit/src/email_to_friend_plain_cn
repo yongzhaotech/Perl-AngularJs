@@ -1,0 +1,8 @@
+你好[% crlf %][% crlf %]
+你的朋友 [ [% sender %] ] 向你推荐刊登在本网站的一则广告[% crlf %][% crlf %]
+物品名称: [% name %][% crlf %]
+登载时间: [% time %][% crlf %]
+物品价钱: [% price %][% crlf %][% crlf %]
+谢谢[% crlf %]
+[% domain %][% crlf %]
+[% today %][% crlf %]

@@ -1,0 +1,81 @@
+(function(angular) {
+	'use strict';
+	angular.module('esales')
+	.factory('userInformation', ['$location', '$cookies', function($location, $cookies) {
+		var _user = {};
+		var fns = {};
+		fns['fetch_user_profile'] = function() {
+			var response = {};
+			eEngine.ajax('user.pl', {action:'fetch_user_profile',session_id:$cookies.get('session_id')}, eEngine.response, response);
+			_user.profile = response['r'];
+		};
+		fns['fetch_user_ads'] = function() {
+			var response = {};
+			eEngine.ajax('user.pl', {action:'fetch_user_ad',session_id:$cookies.get('session_id')}, eEngine.response, response);
+			_user.ads = response['r'];
+		};
+		fns['sign_out'] = function() {
+			var response = {};
+			eEngine.ajax('user.pl', {action:'sign_out',session_id:$cookies.get('session_id')}, eEngine.response, response);
+			if(response['r']['ok']) {
+				_user = {};
+				$cookies.remove('session_id');
+				$location.url('/user_account');
+			}
+		};
+		fns['user_signed_in'] = function() {
+			return $cookies.get('session_id') ? true : false; // back end would validate the real signed in status
+		};
+		fns['user'] = function() {
+			return _user.profile.user;
+		};
+		fns['ads'] = function() {
+			return _user.ads;
+		};
+		fns['user_page'] = function(p) {
+			$location.url('/' + p);
+		};
+		return fns;
+	}])
+	.component('userAccount', {
+		templateUrl: '/ads/ng-template/html/user-account.html',
+		controller: ['$rootScope', '$timeout', '$cookies', 'actionBoxes', 'userInformation', function userAccountController($rootScope, $timeout, $cookies, actionBoxes, userInformation) {
+			var _this = this;
+			_this.account = userInformation;
+			_this.boxes = actionBoxes;
+			_this.$onInit = function() {
+				_this.gb_lang = $rootScope.get_gb_lang;
+				_this.gb_labels = $rootScope.gb_labels;
+			};
+			_this.account.fetch_user_profile();
+		}]	
+	}) 
+	.component('userAdvertise', {
+		templateUrl: '/ads/ng-template/html/user-advertise.html',
+		controller: ['$rootScope', '$timeout', '$cookies', '$location', 'actionBoxes', 'userInformation', function userAccountController($rootScope, $timeout, $cookies, $location, actionBoxes, userInformation) {
+			var _this = this;
+			_this.account = userInformation;
+			_this.boxes = actionBoxes;
+			_this.$onInit = function() {
+				_this.gb_lang = $rootScope.get_gb_lang;
+				_this.gb_labels = $rootScope.gb_labels;
+			};
+			_this.account.fetch_user_profile();
+			_this.account.fetch_user_ads();
+			_this.expand_user_ad = function(a) {
+				expand_user_ad(a.id);
+			};
+			_this.edit_ad = function(a) {
+				$location.url('/edit_ad:' + a.id);
+			};
+			_this.delete_advertise = function(f, a) {
+				delete_advertise(f, a.id);
+			};
+		}]	
+	}) 
+	.directive('userTabs', function() {
+		return {
+			templateUrl: '/ads/ng-template/html/user-tabs.html'
+		};
+	});
+})(window.angular);

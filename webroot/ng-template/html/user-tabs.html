@@ -1,0 +1,22 @@
+<nav class="account_tabs">
+	<section ng-if="$ctrl.engine.user_signed_in()">
+		<span class="wide_button" ng-click="$ctrl.account.sign_out()">{{$ctrl.engine.gb_labels('c_sign_out')}}</span>
+		<span class="wide_button" ng-click="$ctrl.account.user_page('user_account')">{{$ctrl.engine.gb_labels('c_profile')}}</span>
+		<span class="wide_button" ng-click="$ctrl.account.user_page('user_advertise')">{{$ctrl.engine.gb_labels('c_my_post')}}</span>
+		<section ng-if="$ctrl.account.user().access_level * 1 > 1">
+			<span class="wide_button" ng-click="$ctrl.account.user_page('save_category')">{{$ctrl.engine.gb_labels('c_category')}}</span>
+			<span class="wide_button" ng-click="$ctrl.account.user_page('save_subcategory')">{{$ctrl.engine.gb_labels('c_sub_category')}}</span>
+			<span class="wide_button" ng-click="$ctrl.account.user_page('admin_perm')">{{$ctrl.engine.gb_labels('c_permission')}}</span>
+			<span class="wide_button" ng-click="$ctrl.account.user_page('admin_ads')">{{$ctrl.engine.gb_labels('c_advertise')}}</span>
+			<span class="wide_button" ng-click="$ctrl.account.user_page('visitor_hits')">{{$ctrl.engine.gb_labels('c_hit')}}</span>
+			<span class="wide_button" ng-click="$ctrl.account.user_page('admin_users')">{{$ctrl.engine.gb_labels('c_user')}}</span>
+			<span class="wide_button" ng-click="$ctrl.account.gen_static_content()">{{$ctrl.engine.gb_labels('c_static_content')}}</span>
+			<span class="wide_button" ng-click="$ctrl.account.gen_static_htmls()">{{$ctrl.engine.gb_labels('c_static_html')}}</span>
+		</section>
+	</section>
+	<section ng-if="!$ctrl.engine.user_signed_in()">
+		<span class="wide_button" ng-click="$ctrl.boxes.attach('login')">{{$ctrl.engine.gb_labels('c_sign_in')}}</span>
+		<span class="wide_button" ng-click="$ctrl.boxes.attach('forget_password')">{{$ctrl.engine.gb_labels('c_fgt_passwd')}}</span>
+		<span class="wide_button" ng-click="$ctrl.boxes.attach('register')">{{$ctrl.engine.gb_labels('c_gen_account')}}</span>
+	</section>
+</nav>

@@ -1,0 +1,13 @@
+[% if visitor_date %]
+	<table style="width:480px;border:0px;">
+	[% foreach list in lists %]
+		<tr><td style='width:80px;font-weight:normal;'>[% list.create_time %]</td><td>[% list.uri %]</td></tr>
+	[% end %]
+	</table>
+[% else %]
+	<table style="width:580px;border:0px;">
+	[% foreach list in lists %]
+		<tr id="ip_[% list.ip %]_[% list.create_time %]"><td style='width:150px;font-weight:bold;cursor:pointer;' onclick="hit_details('[% list.ip %]_[% list.create_time %]');">[% list.create_time %] ([% list.week_day %])</td><td>[% list.count %]</td></tr>
+	[% end %]
+	</table>
+[% end %]

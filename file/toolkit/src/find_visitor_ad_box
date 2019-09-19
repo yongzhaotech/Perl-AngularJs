@@ -1,0 +1,21 @@
+<div id="find_visitor_ad_box" class="ad_action_box" ng-show="boxes.box_attached('find_visitor_ad')">
+	<form style="margin:0;" name="find_visitor_ad_form" action="[% site_config.config('perl_root') %]/server_request.pl">
+		<div class="account_box_title">{{gb_labels.c_visitor_retrieve_title[gb_lang]}}</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().email_phone">{{gb_labels.c_eml_ph_title[gb_lang]}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().email_phone">{{gb_labels[boxes.errors().email_phone][gb_lang]}}</div>
+			<div class="account_box_field"><input type="text" name="email_phone" maxlength="150" /></div>
+		</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().post_id">{{gb_labels.c_post_id_title[gb_lang]}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().post_id">{{gb_labels[boxes.errors().post_id][gb_lang]}}</div>
+			<div class="account_box_field"><input type="text" name="post_id" maxlength="40" /></div>
+		</div>
+		<div class="account_box_label">
+			<span ng-class="['btn',{warn_btn:boxes.has_screen_error()}]" ng-click="boxes.submit(boxes.get_scope())">{{gb_labels.c_retrieve[gb_lang]}}</span>
+			<span ng-class="['btn']" ng-click="boxes.detach('find_visitor_ad')">{{gb_labels.c_cancel[gb_lang]}}</span>
+			<input type="hidden" name="f_action" value="retrieve_visitor_post" />
+		</div>
+	</form>
+</div>
+

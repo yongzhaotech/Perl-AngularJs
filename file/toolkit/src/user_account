@@ -1,0 +1,41 @@
+[% unless site_config.error() %]
+<div id="user_account_box" ng-controller="userAccountController">
+	<form name="change_user_profile" action="[% site_config.config('perl_root') %]/change_user_profile.pl"> 
+		<div class="ad_inline_block">
+			<div class="account_box_title">{{gb_labels.c_basic_info[gb_lang]}}</div>
+		</div><div class="ad_inline_block_top"></div>
+		<div class="ad_inline_block">
+			<div class="account_box_label" ng-if="!userAccount.errors().first_name">{{gb_labels.c_first_name[gb_lang]}}</div>
+			<div class="account_box_label box_error" ng-if="userAccount.errors().first_name">{{gb_labels[userAccount.errors().first_name][gb_lang]}}</div>
+		</div><div class="ad_inline_block_top">
+			<div class="account_box_field">
+				<input type="text" name="first_name" maxlength="30" value="[% HTML.escape(user.get('first_name')) %]" />
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="account_box_label" ng-if="!userAccount.errors().last_name">{{gb_labels.c_last_name[gb_lang]}}</div>
+			<div class="account_box_label box_error" ng-if="userAccount.errors().last_name">{{gb_labels[userAccount.errors().last_name][gb_lang]}}</div>
+		</div><div class="ad_inline_block_top">
+			<div class="account_box_field">
+				<input type="text" name="last_name" maxlength="30" value="[% HTML.escape(user.get('last_name')) %]" />
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="account_box_label">{{gb_labels.c_eml_addr[gb_lang]}})</div>
+		</div><div class="ad_inline_block_top">
+			<div class="account_box_field"><span style="font-weight:bold;">[% HTML.escape(user.get('email')) %]</span></div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="account_box_label" ng-if="!userAccount.errors().password">{{gb_labels.c_passwd[gb_lang]}})</div>
+			<div class="account_box_label box_error" ng-if="userAccount.errors().password">{{gb_labels[userAccount.errors().password][gb_lang]}}</div>
+		</div><div class="ad_inline_block_top">
+			<div class="account_box_field">
+				<input type="password" name="password"  maxlength="40" />
+			</div>
+		</div>
+		<div class="account_box_label">
+			<span ng-class="['btn',{warn_btn:userAccount.has_screen_error()}]" ng-click="userAccount.submit('change_user_profile', userAccount.get_scope())">{{gb_labels.c_upt_profile[gb_lang]}}</span>
+		</div>
+	</form>
+</div>
+[% end %]

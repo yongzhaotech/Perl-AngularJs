@@ -1,0 +1,86 @@
+body {margin:0;padding:0;height:100%;background-color:#eeeeec}
+* {box-sizing:border-box;font-size:10pt;}
+main.wrapper {
+	margin: auto;
+	width: 100%;
+	background-color: #eeeeec;
+	padding: 10px 10px 20px 10px;
+}
+div.loading {
+	padding: 20px;
+}
+section.container {
+	display:block;
+	margin:auto;
+	width: 100%;
+	border: #cccccc solid 1px;
+}
+nav.sport_nav_list {
+	display:flex;display:-webkit-flex;align-items:center;-webkit-align-items:center;justify-content:flex-start;-webkit-justify-content:flex-start;
+}
+nav.sport_nav {
+	padding: 10px 0px;
+	margin: 0px 10px;
+} 
+nav.active {
+	color: #0509a1;
+	cursor: pointer;
+}
+div.sport {
+	padding: 10px 0px;
+	border-top: #cccccc solid 1px;
+	margin: 0px 10px;
+}
+.title {padding-bottom: 25px;}
+span.link {
+	color: #8a8a8a;
+	cursor: pointer;
+}
+span.link:hover {
+	text-decoration: underline;
+}
+div.tick {
+	float: right;
+	margin-right: 15px;
+	font-weight: bold;
+	color: #8a8a8a;
+	cursor: pointer;
+	width: 25px;
+	text-align: center;
+}
+div.time {
+	color: #8a8a8a;
+	display: inline-block;
+	width: 15%;
+}
+div.team {
+	color: #8a8a8a;
+	display: inline-block;
+	width: 65%;
+}
+div.price {
+	color: #8a8a8a;
+	display: inline-block;
+	width: 15%;
+	text-align: right;
+}
+div.matchup-title {
+	border-bottom: #cccccc solid 1px;
+	padding: 60px 0px 10px;
+	color: #0509a1;
+	font-weight: bold;
+}
+div.awayteam {
+	padding: 10px 0px 2px;
+}
+div.hometeam {
+	padding: 2px 0px 0px;
+}
+/*
+	set the container width to 65% on large display devices
+*/
+@media only screen and (min-width: 768px) {
+	section.container {
+		width: 65%;
+	}
+}

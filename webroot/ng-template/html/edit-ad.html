@@ -1,0 +1,198 @@
+<div id="ad_form_wrapper">
+	<form name="work_on_advertise" action="/adb/edit_ad.pl" ng-init="register_form('work_on_advertise')"> 
+		<div class="ad_inline_block"><div class="ad_box_title">{{engine.gb_labels('p_edit_title')}}</div></div><div class="ad_inline_block_top"></div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_cat_title')}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.category">{{engine.gb_labels(screen_error.category)}}</div>
+				<div ad-category type="main"></div>
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{engine.gb_labels('p_cat_hint')}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_sub_cat_title')}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.item">{{engine.gb_labels(screen_error.item)}}</div>
+				<div ad-category type="sub"></div>
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{engine.gb_labels('p_sub_cat_hint')}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_name_title')}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.ad_name">{{engine.gb_labels(screen_error.ad_name)}}</div>
+				<input type="text" name="ad_name" ng-model="name" maxlength="100" />
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{engine.gb_labels('p_ad_name_hint')}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_free_title')}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.is_free">{{engine.gb_labels(screen_error.is_free)}}</div>
+				<nav class="btn_list">
+					<div ng-class="['tab',{active:is_free == '1'}]" ng-click="ad_is_free()">{{engine.gb_labels('p_yes_title')}}</div>
+					<div ng-class="['tab',{active:is_free == '0'}]" ng-click="ad_not_free()">{{engine.gb_labels('p_no_title')}}</div>
+				</nav>
+				<input type="hidden" name="is_free" value="{{is_free}}" />
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+				</div>
+			</div>
+		</div>
+		<div id="price_row" ng-show="is_free == '0'">
+			<div class="ad_inline_block">
+				<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_currency_title')}}</div></div>
+				<div class="ad_box_field">
+					<div class="error" ng-if="screen_error.currency">{{engine.gb_labels(screen_error.currency)}}</div>
+					<nav class="btn_list">
+						<div ng-class="['tab',{active:currency == 'c'}]" ng-click="set_currency('c')">{{engine.gb_labels('p_can_dollar')}}</div>
+						<div ng-class="['tab',{active:currency == 'u'}]" ng-click="set_currency('u')">{{engine.gb_labels('p_us_dollar')}}</div>
+						<div ng-class="['tab',{active:currency == 'r'}]" ng-click="set_currency('r')">{{engine.gb_labels('p_rmb_yuan')}}</div>
+					</nav>
+					<input type="hidden" name="currency" value="{{currency}}" ng-disabled="is_free != '0'" />
+				</div>
+			</div><div class="ad_inline_block_top">
+				<div class="ad_box_field">
+					<div class="currency_hints">
+					</div>
+				</div>
+			</div>
+			<div class="ad_inline_block">
+				<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_price_title')}}</div></div>
+				<div class="ad_box_field">
+					<div class="error" ng-if="screen_error.price">{{engine.gb_labels(screen_error.price)}}</div>
+					<input type="text" name="price" maxlength="15" ng-disabled="is_free != '0'" ng-model="price" />
+				</div>
+			</div><div class="ad_inline_block_top">
+				<div class="ad_box_field">
+					<div class="post_hints">
+						{{engine.gb_labels('p_price_hint')}}	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_detail_title')}}</div></div>
+			<div class="ad_box_field">
+				<textarea name="description" rows="4" cols="100" ng-model="description"></textarea>
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{engine.gb_labels('p_detail_hint')}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field">
+				<ng-switch on="ad_image_full()">
+					<nav class="btn_list">
+						<div ng-switch-when="true" ng-class="['tab','inactive']">{{engine.gb_labels('r_add_photos')}}</div>
+						<div ng-switch-default ng-class="'tab'" ng-click="add_ad_image()">{{engine.gb_labels('r_add_photos')}}</div>
+					</nav>
+				</ng-switch>
+			</div>
+			<image-list></image-list>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{engine.gb_labels('p_add_photo_hint')}} 
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_contact_title')}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.contact_method">{{engine.gb_labels(screen_error.contact_method)}}</div>
+				<nav class="btn_list">
+					<div ng-class="['tab',{active:is_contact_method('contact_phone')}]" ng-click="set_contact_method('contact_phone')">{{engine.gb_labels('p_phone')}}</div>
+					<div ng-class="['tab',{active:is_contact_method('contact_email')}]" ng-click="set_contact_method('contact_email')">{{engine.gb_labels('p_email')}}</div>
+				</nav>
+				<input type="hidden" name="contact_method" value="{{contact_method()}}" />
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{engine.gb_labels('p_contact_you_title')}}
+				</div>
+			</div>
+		</div>
+		<div id="contact_phone_row" ng-show="is_contact_method('contact_phone')">
+			<div class="ad_inline_block">
+				<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_phone_title')}}</div></div>
+				<div class="ad_box_field">
+					<div class="error" ng-if="screen_error.contact_phone">{{engine.gb_labels(screen_error.contact_phone)}}</div>
+					<input type="text" ng-disabled="!is_contact_method('contact_phone')" name="contact_phone" ng-model="contact_methods.contact_phone" maxlength="20" placeholder="9051234567" />
+				</div>
+			</div><div class="ad_inline_block_top">
+				<div class="ad_box_field">
+					<div class="post_hints">
+						{{engine.gb_labels('p_select_phone_hint')}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_province_title')}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.province">{{engine.gb_labels(screen_error.province)}}</div>
+				<div ad-location type="province"></div>
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{engine.gb_labels('p_province_hint')}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_city_title')}}</div></div>
+			<div class="ad_box_field">
+				<div class="error" ng-if="screen_error.city">{{engine.gb_labels(screen_error.city)}}</div>
+				<div ad-location type="city"></div>
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{engine.gb_labels('p_city_hint')}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_inline_block">
+			<div class="ad_box_field"><div class="ad_box_label">{{engine.gb_labels('p_add_title')}}</div></div>
+			<div class="ad_box_field">
+				<input type="text" name="address" ng-model="address" maxlength="100" placeholder="{{engine.gb_labels('p_add_placeholder')}}" />
+			</div>
+		</div><div class="ad_inline_block_top">
+			<div class="ad_box_field">
+				<div class="post_hints">
+					{{engine.gb_labels('p_add_hint')}}
+				</div>
+			</div>
+		</div>
+		<div class="ad_box_field"><div class="ad_box_label"></div>
+			<span ng-class="['btn',{warn_btn:has_screen_error()}]" ng-click="submit()">{{engine.gb_labels('p_upt_post')}}</span>
+		</div>
+		<input type="hidden" name="advertise_id" value="{{angular_ad.id}}" />
+		<input type="hidden" name="token" value="" />
+		<input type="hidden" name="site_lang" value="{{engine.gb_lang()}}" />
+		<input type="hidden" name="session_id" value="{{engine.cookie('session_id')}}" />
+	</form>
+</div>

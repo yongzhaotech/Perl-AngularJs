@@ -1,0 +1,27 @@
+<div class="ad_action_box_wrapper">
+	<div id="ask_poster_box" class="ad_action_box" ng-show="boxes.box_attached('ask_poster')">
+		<div id="ask_poster">
+			<form name="ask_poster_form">
+				<div style="height:19px;font-style:oblique;font-weight:bold;color:#1b0af9;" id="advertise_name">{{boxes.mailer_info().name}}</div>
+				<div class="account_box_title">{{engine.gb_labels('c_contact_poster_title')}}</div>
+				<div>
+					<div class="account_box_label" ng-if="!boxes.errors().email">{{engine.gb_labels('c_return_eml')}}</div>
+					<div class="account_box_label box_error" ng-if="boxes.errors().email">{{engine.gb_labels(boxes.errors().email)}}</div>
+					<div class="account_box_field"><input type="text" name="email" maxlength="100" placeholder="account.name@example.com" /></div>
+				</div>
+				<div>
+					<div class="account_box_label" ng-if="!boxes.errors().message">{{engine.gb_labels('c_msg_post_title')}}</div>
+					<div class="account_box_label box_error" ng-if="boxes.errors().message">{{engine.gb_labels(boxes.errors().message)}}</div>
+					<div class="account_box_field">
+						<textarea name="message" rows="4" cols="100" placeholder="{{engine.gb_labels('c_msg_post_hint')}}" onPaste="return false"></textarea>
+					</div>
+				</div>
+				<div class="account_box_label">
+					<span ng-class="['btn',{warn_btn:boxes.has_screen_error()}]" ng-click="boxes.submit(boxes.get_scope())">{{engine.gb_labels('c_submit')}}</span>
+					<span ng-class="['btn']" ng-click="boxes.detach_mailer('ask_poster');">{{engine.gb_labels('c_cancel')}}</span>
+					<input type="hidden" name="advertise_id" value="{{boxes.mailer_info().id}}" />
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

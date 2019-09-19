@@ -1,0 +1,8 @@
+Hello[% crlf %][% crlf %]
+Your friend [ [% sender %] ] recommends you the following item posted on our site[% crlf %][% crlf %]
+Item name: [% name %][% crlf %]
+Posted: [% time %][% crlf %]
+Price: [% price %][% crlf %][% crlf %]
+Thanks[% crlf %]
+[% domain %][% crlf %]
+[% today %][% crlf %]

@@ -1,0 +1,30 @@
+<div class="col_{{nav_col}}" ng-repeat="ad in ads | orderBy:order_by()">
+	<div class="ad_block" ng-class="{dtl_bk:show_detail(ad)}">
+		<div class="block_icon" ng-click="large_image(ad)"><img ng-src="/ads/image/ad/big/{{ad.picture_id}}.jpg" class="ad_image" /></div>
+		<div class="block_spacer"></div>
+		<div class="block_price"><span class="picture_number">{{ad.price_display[gb_lang]}}</span></div>
+		<div class="block_price">{{gb_labels.r_ad_listed[gb_lang]}}: {{ad.create_date}}</div>
+		<div class="block_info"><span class="button" ng-click="launch(ad)">{{ad.name}}</span></div>
+		<div class="block_info"><span>{{ad.city[gb_lang]}}</span>, <span>{{ad.province[gb_lang]}}</span></div>
+		<div class="block_info">
+			<div class="contact_icon">
+				<span class="email_icon" ng-if="by_mail(ad)"><img class="button" ng-src="/ads/image/gui/email.gif" ng-click="boxes.attach_mailer(ad, 'advertise_contact')" /></span>
+				<span ng-if="by_phone(ad)"><a href="tel:{{ad.contact_phone}}"><img class="button" ng-src="/ads/image/gui/cell.gif" /></a></span>
+				<span class="friend_icon" ng-if="by_mail(ad)"><img class="button" ng-src="/ads/image/gui/friend.gif" ng-click="boxes.attach_mailer(ad, 'list_email_friend')" /></span>
+				<span><img class="button" ng-src="/ads/image/gui/{{show_detail(ad) ? 'minus' : 'plus'}}.gif" ng-click="flag_detail(ad)" /></span>
+			</div>
+		</div>
+		<div class="block_spacer"></div>
+	<div class="sm_spacer" ng-if="show_detail(ad)"></div>
+	</div>
+	<div class="message_desc" ng-if="show_detail(ad)">
+		<div>
+			<div class="dtl_address">
+				<span ng-if="ad.address">{{ad.address}}, </span><span>{{ad.city[gb_lang]}}, {{ad.province[gb_lang]}}</span>
+			</div>
+			<div ng-bind-html="html_desc(ad)"></div>
+			<div class="ang_dtl_close" ng-click="flag_detail(ad)">&times;</div>
+		</div>
+	</div>
+	<div class="block_spacer"></div>
+</div>

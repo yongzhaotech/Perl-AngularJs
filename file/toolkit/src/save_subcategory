@@ -1,0 +1,65 @@
+[% if site_config.error() %]
+<div class="site_config_error">
+    [% site_config.error %]
+</div>
+[% else %]
+<form name="add_subcategory" action="[% site_config.config('perl_root') %]/save_subcategory.pl">
+	<div class="account_box_title">New Sub Category</div>
+	<div>
+		<div class="account_box_label">Choose a category</div>
+		<div class="account_box_field">
+			<select name="category">
+			[% foreach category in categories %]
+				<option value="[% category.id %]">[% category.name %]::[% category.name_cn %]</option>
+			[% end %]
+			</select>
+		</div>
+	</div>
+	<div>
+		<div class="account_box_label">Sub Category</div>
+		<div class="account_box_field"><input type="text" name="sub_category" maxlength="60" /></div>
+		<div class="account_box_field"><input type="text" name="sub_category_cn" maxlength="60" /></div>
+	</div>
+	<div class="account_box_label">
+		<input type="button" name="smt_category" value="Add" onclick="check_input_fields(this.form);" />
+		<input type="hidden" name="frm_action" value="new_subcategory" />
+	</div>
+</form>
+<div class="devider"></div>
+<form name="edit_subcategory" action="[% site_config.config('perl_root') %]/save_subcategory.pl">
+	<div>
+		<div class="account_box_title">Change sub category text</div>
+		<div class="account_box_label">Select a category</div>
+		<div class="account_box_field">
+			<select name="category" onchange="adm_load_data_item(this.form, this, 'item');this.form['new_subcategory'].value='';this.form['new_subcategory_cn'].value='';">
+			[% foreach category in categories %]
+				<option value="[% category.id %]">[% category.name %]::[% category.name_cn %]</option>
+			[% end %]
+			</select>
+		</div>
+		<div class="account_box_label">Sub category to change</div>
+		<div class="account_box_field">
+			<select name="item" onchange="load_to_change(this.form, this, 'new_subcategory', 'new_subcategory_cn', 'edit_subcategory_obj');">
+			[% foreach item in items.${default_category_id} %]
+				<option value="[% item.id %]">[% item.name %]::[% item.name_cn %]</option>
+			[% end %]
+			</select>
+		</div>
+	</div>
+	<div id="edit_subcategory_obj" style="display:none;">
+		<div>
+			<div class="account_box_label">Sub category</div>
+			<div class="account_box_field"><input type="text" name="new_subcategory" maxlength="60" /></div>
+			<div class="account_box_field"><input type="text" name="new_subcategory_cn" maxlength="60" /></div>
+		</div>
+		<div class="account_box_label">
+			<input type="button" name="edit_subcategory" value="Edit" onclick="check_input_fields(this.form);" />
+			<input type="hidden" name="frm_action" value="edit_subcategory" />
+		</div>
+	</div>
+</form>
+<script>
+	var adm_page_vars = {category:{}};
+	[% category_list %]
+</script>
+[% end %]

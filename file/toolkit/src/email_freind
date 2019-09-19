@@ -1,0 +1,24 @@
+<div class="ad_action_box_wrapper">
+	<div id="list_email_friend_box" class="ad_action_box" ng-show="boxes.box_attached('list_email_friend')">
+		<form style="margin:0;" name="list_email_friend_form" action="[% site_config.config('perl_root') %]/server_request.pl">
+			<div style="height:19px;font-style:oblique;font-weight:bold;color:#1b0af9;" id="advertise_name">{{boxes.mailer_info().name}}</div>
+			<div class="account_box_title">{{gb_labels.c_email_friend_link[gb_lang]}}</div>
+			<div>
+				<div class="account_box_label" ng-if="!boxes.errors().email">{{gb_labels.c_return_eml[gb_lang]}}</div>
+				<div class="account_box_label box_error" ng-if="boxes.errors().email">{{gb_labels[boxes.errors().email][gb_lang]}}</div>
+				<div class="account_box_field"><input type="text" name="email" /></div>
+			</div>
+			<div>
+				<div class="account_box_label" ng-if="!boxes.errors().friend_email">{{gb_labels.c_friend_eml[gb_lang]}}</div>
+				<div class="account_box_label box_error" ng-if="boxes.errors().friend_email">{{gb_labels[boxes.errors().friend_email][gb_lang]}}</div>
+				<div class="account_box_field"><input type="text" name="friend_email" /></div>
+			</div>
+			<div class="account_box_label">
+				<span ng-class="['btn',{warn_btn:boxes.has_screen_error()}]" ng-click="boxes.submit(boxes.get_scope())">{{gb_labels.c_submit[gb_lang]}}</span>
+				<span ng-class="['btn']" ng-click="boxes.detach_mailer('list_email_friend')">{{gb_labels.c_cancel[gb_lang]}}</span>
+				<input type="hidden" name="f_action" value="email_ad_friend" />
+				<input type="hidden" name="aid" value="{{boxes.mailer_info().id}}" />
+			</div>
+		</form>
+	</div>
+</div>

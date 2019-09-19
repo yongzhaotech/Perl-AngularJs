@@ -1,0 +1,3 @@
+<div id='random_advertise'>
+</div>
+<img src="[% site_config.config('web_root') %]/image/gui/s.gif" onload="generate_random_ads('[% site_config.config('perl_root') %]/server_request.pl');" />

@@ -1,0 +1,14 @@
+<div class="dp_wrapper" ng-if="cat_id">
+	<div class="dp_list">
+		<div ng-switch="cat.c.length">
+			<div ng-switch-when="0">
+				<div ng-class="['dp_option']">...</div>
+			</div>
+			<div ng-switch-default>
+				<div ng-model="item" ng-repeat="item in cat.c">
+					<div ng-class="['dp_option', {selected:item_selected(item)}]" ng-show="show_item(item)" ng-click="select_item(item)">{{item.n[engine.gb_lang()]}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

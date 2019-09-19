@@ -1,0 +1,9 @@
+<html>
+	<head><title></title></head>
+	<body onload="parent.window.post_success(document.display.content.value,document.display.content_2.value);document.display.removeChild(document.display.content);document.display.removeChild(document.display.content_2);[% execute_js_functions %]">
+		<form name="display">
+			<textarea name="content" style="display:none;">[% server_response %]</textarea>
+			<textarea name="content_2" style="display:none;">[% server_response_2 %]</textarea>
+		</form>
+    </body>
+</html>

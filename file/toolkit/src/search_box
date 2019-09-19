@@ -1,0 +1,25 @@
+<div id="search_box" class="ad_action_box" ng-show="boxes.box_attached('search')">
+	<form name="search_advertise"> 
+		<div class="account_box_title">{{gb_labels.c_search_title[gb_lang]}}</div>
+		<div class="account_box_field">
+			<div srh-location type="srh-province"></div>
+		</div>
+		<div class="account_box_field">
+			<div srh-location type="srh-city"></div>
+		</div>
+		<div class="account_box_field">
+			<div srh-category type="srh-main"></div>
+		</div>
+		<div class="account_box_field">
+			<div srh-category type="srh-sub"></div>
+		</div>
+		<div class="account_box_field">
+			<input type="text" name="ad_keyword" ng-model="ad_keyword" placeholder="{{gb_labels.c_keyword_placeholder[gb_lang]}}" />
+		</div>
+		<div class="account_box_label">
+			<span ng-class="['btn']" onclick="search_advertises();">{{gb_labels.c_search_btn[gb_lang]}}</span>
+			<span ng-class="['btn']" ng-click="boxes.detach('search')">{{gb_labels.c_cancel[gb_lang]}}</span>
+		</div>
+		<input type="hidden" name="start" />
+	</form>
+</div>

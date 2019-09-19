@@ -1,0 +1,29 @@
+<div id="register_box" class="ad_action_box" ng-show="boxes.box_attached('register')">
+	<form name="register_form"> 
+		<div class="account_box_title">{{engine.gb_labels('c_gen_account_tile')}}</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().first_name">{{engine.gb_labels('c_first_name')}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().first_name">{{engine.gb_labels(boxes.errors().first_name)}}</div>
+			<div class="account_box_field"><input type="text" name="first_name" maxlength="30" placeholder="Joe" /></div>
+		</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().last_name">{{engine.gb_labels('c_last_name')}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().last_name">{{engine.gb_labels(boxes.errors().last_name)}}</div>
+			<div class="account_box_field"><input type="text" name="last_name" maxlength="30" placeholder="Doe" /></div>
+		</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().email">{{engine.gb_labels('c_eml_addr')}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().email">{{engine.gb_labels(boxes.errors().email)}}</div>
+			<div class="account_box_field"><input type="text" name="email" maxlength="150" placeholder="account.name@example.com" /></div>
+		</div>
+		<div>
+			<div class="account_box_label" ng-if="!boxes.errors().password">{{engine.gb_labels('c_passwd')}}</div>
+			<div class="account_box_label box_error" ng-if="boxes.errors().password">{{engine.gb_labels(boxes.errors().password)}}</div>
+			<div class="account_box_field"><input type="password" name="password"  maxlength="40" placeholder="Abc56789" /></div>
+		</div>
+		<div class="account_box_label">
+			<span ng-class="['btn',{warn_btn:boxes.has_screen_error()}]" ng-click="boxes.submit(boxes.get_scope())">{{engine.gb_labels('c_submit')}}</span>
+			<span ng-class="['btn']" ng-click="boxes.detach('register')">{{engine.gb_labels('c_cancel')}}</span>
+		</div>
+	</form>
+</div>

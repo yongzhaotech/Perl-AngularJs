@@ -1,0 +1,17 @@
+<section class='container'>
+	<div class='loading' ng-if="!$ctrl.loadDone">Loading requested data...</div>
+	<div ng-if="$ctrl.loadDone">
+		<nav class='sport_nav_list'>
+			<nav class='sport_nav active' ng-click="$ctrl.goToSport()">Sports</nav>
+			&gt;
+			<nav class='sport_nav'>{{$ctrl.leagueTitle}}</nav>
+		</nav>
+		<div class='sport title'>
+			{{$ctrl.leagues.length}} leagues found
+		</div>
+		<div class='sport' ng-repeat="league in $ctrl.leagues | orderBy:sortOrder">
+			<span class='link' ng-click="$ctrl.selectLeague(league)">{{league.name}}</span>
+			<div class='tick' ng-click="$ctrl.selectLeague(league)">&#10093;</div>
+		</div>
+	</div>
+</section>

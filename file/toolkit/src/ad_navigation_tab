@@ -1,0 +1,9 @@
+[% if search_terms %]
+<div class="ad_nav_bar">
+	[% count = 0 %]
+	[% foreach term in search_terms %]
+		[% if count > 0 %]> [% end %]<span class="button" onclick="search_ad_term('[% term.key %]');">[% term.text %]</span>
+		[% count = count + 1 %]
+	[% end %]
+</div>
+[% end %]

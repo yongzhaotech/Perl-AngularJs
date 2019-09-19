@@ -1,0 +1,31 @@
+<section class='container'>
+	<div class='loading' ng-if="!$ctrl.loadDone">Loading requested data...</div>
+	<div ng-if="$ctrl.loadDone">
+		<nav class='sport_nav_list'>
+			<nav class='sport_nav active' ng-click="$ctrl.goToSport()">Sports</nav>
+			&gt;
+			<nav class='sport_nav active' ng-click="$ctrl.goToLeague($ctrl.sportId)">{{$ctrl.leagueTitle}}</nav>
+			&gt;
+			<nav class='sport_nav'>{{$ctrl.matchUpName}}</nav>
+		</nav>
+		<div class='sport title'>
+			<match ng-if="$ctrl.matchFound">{{$ctrl.matchupCount}} matchups found</match>
+			<match ng-if="!$ctrl.matchFound">No matchups found</match>
+		</div>
+		<div class='sport' ng-repeat="matchup in $ctrl.matchups">
+			<div class='matchup-title'>{{$ctrl.formatDate(matchup.group)}}</div>
+			<games ng-repeat="game in matchup.games | orderBy:'+timetonumber'">
+				<div class='awayteam'>
+					<div class='time'>{{game.starttime}}</div>
+					<div class='team'>{{game.awayteam}}</div>
+					<div class='price'>{{game.awayprice}}</div>
+				</div>
+				<div class='hometeam'>
+					<div class='time'></div>
+					<div class='team'>{{game.hometeam}}</div>
+					<div class='price'>{{game.homeprice}}</div>
+				</div>
+			</games>
+		</div>
+	</div>
+</section>

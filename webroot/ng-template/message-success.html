@@ -1,0 +1,15 @@
+<div class="message_wrapper" ng-if="msg_flag">
+	<div class="ang_close" ng-click="clear_success_messages()">&times;</div>
+	<div class="message">
+		<div class="success" ng-repeat="m in success_message">
+			{{m}}
+		</div>
+		<div ng-if="link_flag">
+			<span class="button confirm" ng-repeat="l in link" ng-click="launch_link(l)">{{l.n}}</span>
+		</div>
+	</div>
+    <div ng-if="fun_flag" class="execute">
+        <div class="func_btn" ng-click="execute_func()">{{engine.gb_labels('r_ok_btn')}}</div>
+        <div class="func_btn" ng-click="clear_func()">{{engine.gb_labels('r_cancel_btn')}}</div>
+    </div>
+</div>
